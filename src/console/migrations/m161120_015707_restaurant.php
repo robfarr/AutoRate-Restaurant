@@ -8,9 +8,9 @@ class m161120_015707_restaurant extends Migration
     {
 
 	    $this->createTable('restaurant', [
-		    'id' => Schema::TYPE_PK,
-		    'name' => Schema::TYPE_STRING . ' NOT NULL',
-		    'address' => Schema::TYPE_STRING,
+		    'id' => $this->primaryKey(),
+		    'name' => $this->string()->notNull(),
+		    'address' => $this->string(),
 	    ]);
 
     }

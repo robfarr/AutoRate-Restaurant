@@ -8,16 +8,16 @@ class m161120_015820_review extends Migration
     {
 
 	    $this->createTable('review', [
-		    'id' => Schema::TYPE_PK,
-		    'restaurant' => Schema::TYPE_INTEGER . ' NOT NULL',
-		    'user' => Schema::TYPE_INTEGER . ' NOT NULL',
-	        'anger' => Schema::TYPE_INTEGER,
-		    'contempt' => Schema::TYPE_INTEGER,
-		    'disgust' => Schema::TYPE_INTEGER,
-		    'fear' => Schema::TYPE_INTEGER,
-		    'happiness' => Schema::TYPE_INTEGER,
-		    'neutral' => Schema::TYPE_INTEGER,
-		    'sadness' => Schema::TYPE_INTEGER,
+		    'id' => $this->primaryKey(),
+		    'restaurant' => $this->integer()->notNull(),
+		    'user' => $this->integer()->notNull(),
+	        'anger' => $this->integer(),
+		    'contempt' => $this->integer(),
+		    'disgust' => $this->integer(),
+		    'fear' => $this->integer(),
+		    'happiness' => $this->integer(),
+		    'neutral' => $this->integer(),
+		    'sadness' => $this->integer(),
 	    ]);
 
 	    $this->addForeignKey(
