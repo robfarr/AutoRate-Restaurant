@@ -94,7 +94,8 @@ class CognitiveInterface {
 		foreach($values as $key => $value) {
 			
 			if($key == "surprise") {
-				$total += $total * $this->cognition_response->{$key};
+				$sign = $total/abs($total);
+				$total += ($value + $total + ($sign * 100.0)) + $this->cognition_response->{$key};
 			}
 			else {
 				$total += $value * $this->cognition_response->{$key};
