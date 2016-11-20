@@ -1,25 +1,43 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $model \app\models\Restaurant */
+/* @var $reviews array */
+/* @var $review \app\models\Review */
+/* @var $mostCommon string */
+/* @var $aggregate array */
 
-$this->title = 'Rate a Restaurant - Restaurant Name';
+$this->title = 'Rate a Restaurant - ' . $model->name;
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Restaurant Name</h1>
+
+        <h1><?= $model->name ?></h1>
+        <p><?= $model->address ?></p>
 
         <!-- Display most popular aggregate emotion -->
-        <p>The average user is mainly excited about this restaurant.</p>
+        <p>Most people are <?= $mostCommon ?> about this restaurant.</p>
 
         <!-- Show aggregate bar here -->
         <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                <span>32% Excited</span>
+
+            <?php
+
+                $weight = max($aggregate);
+                $emotion = array_keys($aggregate, $weight)[0];
+
+                $colour = 'info';
+                if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
+                if($emotion == 'happiness') $colour = 'success';
+
+            ?>
+
+            <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?=
+                $weight ?>%">
+                <span><?= $weight ?>% <?= $emotion ?></span>
             </div>
-            <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                <span>12% Unhappy</span>
-            </div>
+
         </div>
 
     </div>
@@ -32,69 +50,35 @@ $this->title = 'Rate a Restaurant - Restaurant Name';
             <table class="table table-hover">
                 <tbody>
 
+                    <?php foreach($reviews as $review){ ?>
                     <tr>
-                        <th width="100px"><img src="https://placeholdit.imgix.net/~text?txtsize=33&w=150&h=150"
-                                                       alt="Upload"
-                                 class="img-thumbnail"></th>
-                        <td style="vertical-align: middle">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                                    <span>32% Excited</span>
-                                </div>
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                                    <span>12% Unhappy</span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th width="100px"><img src="https://placeholdit.imgix.net/~text?txtsize=33&w=150&h=150"
-                                               alt="Upload"
+                        <th width="100"><img src="<?= $review->image ?>" alt="Review Selfie"
                                                class="img-thumbnail"></th>
                         <td style="vertical-align: middle">
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                                    <span>32% Excited</span>
-                                </div>
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                                    <span>12% Unhappy</span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <th width="100px"><img src="https://placeholdit.imgix.net/~text?txtsize=33&w=150&h=150"
-                                               alt="Upload"
-                                               class="img-thumbnail"></th>
-                        <td style="vertical-align: middle">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                                    <span>32% Excited</span>
-                                </div>
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                                    <span>12% Unhappy</span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                                <?php
 
-                    <tr>
-                        <th width="100px"><img src="https://placeholdit.imgix.net/~text?txtsize=33&w=150&h=150"
-                                               alt="Upload"
-                                               class="img-thumbnail"></th>
-                        <td style="vertical-align: middle">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                                    <span>32% Excited</span>
+                                    $emotion = $review->getMaxEmotion();
+                                    $weight = $review->getMaxWeight();
+
+                                    $colour = 'info';
+                                    if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
+                                    if($emotion == 'happiness') $colour = 'success';
+
+                                ?>
+
+                                <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
+                                    <?=
+                                    $weight ?>%">
+                                    <span><?= $weight ?>% <?= $emotion ?></span>
                                 </div>
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                                    <span>12% Unhappy</span>
-                                </div>
+
+
                             </div>
                         </td>
                     </tr>
+                    <?php } ?>
 
                 </tbody>
             </table>
