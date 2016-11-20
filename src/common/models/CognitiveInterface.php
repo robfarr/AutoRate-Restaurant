@@ -95,9 +95,9 @@ class CognitiveInterface {
 		$min = null;
 		
 		foreach($weights as $key => $value) {
-			$total += $value * $this->cognition_response->{$key} * 100.0;
+			$total += $value * $this->cognition_response->{$key};
 			
-			$potential = $value * 100.0;
+			$potential = $value;
 			
 			if($max != null) {
 				$max = max($max, $potential);
@@ -114,7 +114,7 @@ class CognitiveInterface {
 			}
 		}
 		
-		return $this->map($total, $min, $max, 0.0, 200.0) - 100.0;
+		return $this->map($total, $min, $max, -1.0, 1.0) * 100;
 	}
 	
 	function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
