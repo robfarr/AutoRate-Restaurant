@@ -6,6 +6,7 @@ class CognitiveInterface {
 	private $client;
 	private $image_url;
 	private $cognition_response;
+	private $numFaces;
 
 	public function __construct($image_url) {
 		$this->image_url = $image_url;
@@ -45,10 +46,10 @@ class CognitiveInterface {
 				}
 			}
 			
-			$size = sizeof($this->cognition_response);
+			$this->numFaces = sizeof($response);
 			
 			foreach($scores as $key => $value) {
-				$this->cognition_response->{$key} = $value/$size;
+				$this->cognition_response->{$key} = $value/$this->numFaces;
 			}
 		}
 		catch (HttpException $ex) {
@@ -65,6 +66,10 @@ class CognitiveInterface {
 	
 	public function getEmotionValues() {
 		return $this->cognition_response;
+	}
+	
+	public function getNumFaces() {
+		return $this->numFaces;
 	}
 
 	public function getPercentileScore() {
