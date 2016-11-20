@@ -31,7 +31,8 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                 </div>
             
             </div>
-            <button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-camera"></span>Rate Restaurant</button>
+            <button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-camera"></span> Rate
+                                                                                                    Restaurant</button>
 
         <?php ActiveForm::end() ?>
 
