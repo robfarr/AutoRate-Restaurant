@@ -93,8 +93,8 @@ class SiteController extends Controller
 					'image'         => Url::home() . '/uploads/' . $model->imageFile->name,
 	                'restaurant'    => 1,   // TODO
 	                'user'          => Yii::$app->user->id,
-	                'score'         => $ci->getEmotionValues(),
-	                'emotion'       => $ci->getDominantEmotion(),
+	                'score'         => $ci->getPercentileScore(),
+	                'emotion'       => $ci->getDominantEmotion()["emotion"],
 	            ]);
 
                 return;
