@@ -11,30 +11,16 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
 ?>
 
 <div class="site-index">
-    <select name= "restaurant">
-        <?php foreach ($restaurants as $r) { ?>
-               <option value="<?= $r->id ?>"><?= $r->name ?></option>
-        <?php } ?>
-    </select>
+
     <div class="jumbotron">
         <h1>Rate a Restaurant</h1>
 
         <p class="lead">Rate your restaurant meal by uploading a selfie.</p>
-        
 
-        <?php $form = ActiveForm::begin(['layout' => 'horizontal','options' => ['enctype' => 'multipart/form-data']]) ?> 
-            <div class="row">
-                <div class="col-md-12">
-                    <span style="display: inline-block;">
-                        <?= $form->field($model, 'imageFile')->fileInput() ?>
-                    </span>
-                </div>
-            
-            </div>
-            <button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-camera"></span> Rate
-                                                                                                    Restaurant</button>
-
-        <?php ActiveForm::end() ?>
+        <button class="btn btn-lg btn-success" data-toggle="modal" data-target="#submit-modal">
+            <span class="glyphicon glyphicon-camera"></span>
+            Rate Restaurant
+        </button>
 
     </div>
 
@@ -79,4 +65,53 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
         </div>
 
     </div>
+
+    <div id="submit-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        Rate Restaurant
+                    </h4>
+                </div>
+
+                <?php $form = ActiveForm::begin(['layout' => 'horizontal','options' => ['enctype' => 'multipart/form-data']]) ?>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="col-sm-3" for="restaurant">Select Restaurant</label>
+                        <div class="col-sm-9">
+                            <select name="restaurant" class="form-control">
+                                <?php foreach ($restaurants as $r) { ?>
+                                    <option value="<?= $r->id ?>"><?= $r->name ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*'])->label("Take 
+                        Selfie") ?>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        Rate Restaurant
+                    </button>
+                </div>
+
+                <?php ActiveForm::end() ?>
+
+            </div>
+        </div>
+    </div>
+
 </div>
