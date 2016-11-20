@@ -7,7 +7,13 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
 ?>
 
 <div class="site-index">
-
+    <select name= "restaurant">
+        <?php
+            foreach ($restaurant as $r) {
+               <option value="<?= $r->id ?>"><?= $r->name ?></option>
+            }
+        ?>
+    </select>
     <div class="jumbotron">
         <h1>Rate a Restaurant</h1>
 
