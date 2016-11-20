@@ -5,6 +5,7 @@
 /* @var $reviews array */
 /* @var $review \app\models\Review */
 /* @var $mostCommon string */
+/* @var $aggregate array */
 
 $this->title = 'Rate a Restaurant - ' . $model->name;
 ?>
@@ -20,12 +21,23 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
 
         <!-- Show aggregate bar here -->
         <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width: 32%">
-                <span>32% Excited</span>
+
+            <?php
+
+                $weight = max($aggregate);
+                $emotion = array_keys($aggregate, $weight)[0];
+
+                $colour = 'info';
+                if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
+                if($emotion == 'happiness') $colour = 'success';
+
+            ?>
+
+            <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?=
+                $weight ?>%">
+                <span><?= $weight ?>% <?= $emotion ?></span>
             </div>
-            <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 12%">
-                <span>12% Unhappy</span>
-            </div>
+
         </div>
 
     </div>
@@ -45,41 +57,23 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
                         <td style="vertical-align: middle">
                             <div class="progress">
 
+                                <?php
 
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?=
-    $review->anger ?>%">
-                                    <span><?= $review->anger ?>% Anger</span>
+                                    $emotion = $review->getMaxEmotion();
+                                    $weight = $review->getMaxWeight();
+
+                                    $colour = 'info';
+                                    if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
+                                    if($emotion == 'happiness') $colour = 'success';
+
+                                ?>
+
+                                <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
+                                    <?=
+                                    $weight ?>%">
+                                    <span><?= $weight ?>% <?= $emotion ?></span>
                                 </div>
 
-                                <div class="progress-bar progress-bar-info" role="progressbar" style="width: <?=
-                                    $review->contempt ?>%">
-                                    <span><?= $review->contempt ?>% Contempt</span>
-                                </div>
-
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?=
-                                    $review->disgust ?>%">
-                                    <span><?= $review->disgust ?>% Disgust</span>
-                                </div>
-
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?=
-                                    $review->fear ?>%">
-                                    <span><?= $review->fear ?>% Fear</span>
-                                </div>
-
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?=
-                                    $review->happiness ?>%">
-                                    <span><?= $review->happiness ?>% Happiness</span>
-                                </div>
-
-                                <div class="progress-bar progress-bar-info" role="progressbar" style="width: <?=
-                                    $review->neutral ?>%">
-                                    <span><?= $review->neutral ?>% Neutral</span>
-                                </div>
-
-                                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?=
-                                    $review->sadness ?>%">
-                                    <span><?= $review->sadness ?>% Sadness</span>
-                                </div>
 
                             </div>
                         </td>
