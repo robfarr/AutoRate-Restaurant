@@ -80,14 +80,14 @@ class CognitiveInterface {
 		}
 
 		$weights = array(
-			"anger" => -1.0,
-			"contempt" => -1.0,
-			"disgust" => -1.0,
-			"fear" => -1.0,
-			"happiness" => 1.0,
+			"anger" => -2.0,
+			"contempt" => -2.0,
+			"disgust" => -3.0,
+			"fear" => -4.0,
+			"happiness" => 3.0,
 			"neutral" => 0.0,
-			"sadness" => -0.8,
-			"surprise" => 0.0
+			"sadness" => -1.0,
+			"surprise" => 0
 		);
 		
 		$total = 0.0;
@@ -95,11 +95,27 @@ class CognitiveInterface {
 		
 		foreach($weights as $key => $value) {
 			$val = $value * $this->cognition_response->{$key};
+			$high = max(0, $value);
+			$low = min(0, $value);
+			$val = $this->map($val, $low, $high, -100.0, 100.0);
 			$total += $val;
-			$sum += abs($value);
+			$sum += abs($val);
 		}
 		
 		return ($total/$sum);
+	}
+	
+	private function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
+		$fromRange = $fromHigh - $fromLow;
+		$toRange = $toHigh - $toLow;
+		$scaleFactor = $toRange / $fromRange;
+	
+		// Re-zero the value within the from range
+		$tmpValue = $value - $fromLow;
+		// Rescale the value to the to range
+		$tmpValue *= $scaleFactor;
+		// Re-zero back to the to range
+		return $tmpValue + $toLow;
 	}
 	
 	public function getDominantEmotion() {
