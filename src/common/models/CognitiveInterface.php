@@ -79,7 +79,7 @@ class CognitiveInterface {
 			return -1;
 		}
 
-		$weights = array(
+		$values = array(
 			"anger" => -2.0,
 			"contempt" => -2.0,
 			"disgust" => -3.0,
@@ -87,22 +87,16 @@ class CognitiveInterface {
 			"happiness" => 3.0,
 			"neutral" => 0.0,
 			"sadness" => -1.0,
-			"surprise" => 0
+			"surprise" => 0.0
 		);
 		
 		$total = 0.0;
-		$sum = 0.0;
 		
-		foreach($weights as $key => $value) {
-			$val = $value * $this->cognition_response->{$key};
-			$high = max(0, $value);
-			$low = min(0, $value);
-			$val = $this->map($val, $low, $high, -100.0, 100.0);
-			$total += $val;
-			$sum += abs($val);
+		foreach($values as $key => $value) {
+			$total += $value * $this->cognition_response->{$key};
 		}
 		
-		return ($total/$sum);
+		return $this->map($total, -4.0, 3.0, -100.0, 100.0);
 	}
 	
 	private function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
