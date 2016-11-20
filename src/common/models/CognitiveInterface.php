@@ -13,7 +13,7 @@ class CognitiveInterface {
 	}
 	
 	private function establish_cognition() {
-		$url = 'https://api.projectoxford.ai';
+		$url = 'https://api.projectoxford.ai/emotion/v1.0/recognize';
 		
 		$headers = array(
 			// Request header
@@ -21,9 +21,9 @@ class CognitiveInterface {
 			'Ocp-Apim-Subscription-Key' => '{' . \Yii::$app->params['emotionAPIKey'] . '}',
 		);
 		
-		$this->client = new Client([$url, array('headers' => $headers)]);
+		$this->client = new Client(array('headers' => $headers));
 		
-		$request = $this->client->post('/emotion/v1.0/recognize');
+		$request = $this->client->post($url);
 		
 		try {
 			$this->cognition_response = json_decode($request->getBody()->getContents());
