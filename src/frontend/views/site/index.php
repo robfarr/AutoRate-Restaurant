@@ -40,7 +40,9 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                     ?>
                     <tr>
                         <th><?= $restaurant->name ?></th>
-                        <td width="75%">
+                        <td width="75%" <?php if($restaurant->getReviews()->count() > 0) { ?> onclick="window
+                            .location = '<?= Url::to(['site/view-restaurant', 'restaurant'
+                        => $restaurant->id]) ?>';"<?php } ?>>
                             <?php if($restaurant->getReviews()->count() > 0) { ?>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar"
@@ -113,6 +115,9 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                             <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*'])->label("Take 
                             Selfie") ?>
                         </div>
+
+                        <p>We'll analyse your selfie to automatically determine a rating for this meal based on the
+                           emotions that we can detect in your photo. Photos uploaded will be publicly accessible.</p>
 
                     </div>
 
