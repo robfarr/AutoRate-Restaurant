@@ -6,7 +6,7 @@
 /* @var $review \app\models\Review */
 /* @var $mostCommon string */
 
-$this->title = 'Rate a Restaurant - ' . $model->name;
+$this->title = 'AutoRate a Restaurant - ' . $model->name;
 
 $verbs = [
     'anger'     =>  'angry',

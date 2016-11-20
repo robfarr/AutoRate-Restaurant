@@ -7,13 +7,13 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a selfie.';
+$this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a selfie.';
 ?>
 
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Rate a Restaurant</h1>
+        <h1>AutoRate a Restaurant</h1>
 
         <p class="lead">Automatically rate your restaurant meal by uploading a selfie, powered by machine learning.</p>
 
