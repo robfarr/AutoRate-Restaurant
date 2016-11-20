@@ -57,14 +57,14 @@ class CognitiveInterface {
 			return -1;
 		}
 		
-		$anger = $this->cognition_response->anger;
-		$contempt = $this->cognition_response->contempt;
-		$disgust = $this->cognition_response->disgust;
-		$fear = $this->cognition_response->fear;
-		$happiness = $this->cognition_response->happiness;
-		$neutral = $this->cognition_response->neutral;
-		$sadness = $this->cognition_response->sadness;
-		$surprise = $this->cognition_response->surprise;
+		$anger = (float) $this->cognition_response->anger;
+		$contempt = (float) $this->cognition_response->contempt;
+		$disgust = (float) $this->cognition_response->disgust;
+		$fear = (float) $this->cognition_response->fear;
+		$happiness = (float) $this->cognition_response->happiness;
+		$neutral = (float) $this->cognition_response->neutral;
+		$sadness = (float) $this->cognition_response->sadness;
+		$surprise = (float) $this->cognition_response->surprise;
 		
 		
 	}
@@ -72,7 +72,7 @@ class CognitiveInterface {
 	public function get_dominant_emotion() {
 		$dominant = array(
 			"emotion" => "anger", 
-			"value" => $this->cognition_response->anger	
+			"value" => (float) $this->cognition_response->anger	
 		);
 		
 		foreach($this->cognition_response as $key => $value) {
@@ -81,7 +81,7 @@ class CognitiveInterface {
 				
 				$dominant = array(
 					"emotion" => $key,
-					"value" => $value
+					"value" => (float) $value
 				);
 			}
 		}
