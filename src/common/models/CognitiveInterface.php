@@ -18,7 +18,7 @@ class CognitiveInterface {
 		$headers = array(
 			// Request header
 			'Content-Type' => 'application/json',
-			'Ocp-Apim-Subscription-Key' => '{' . \Yii::$app->params['emotionAPIKey'] . '}',
+			'Ocp-Apim-Subscription-Key' => \Yii::$app->params['emotionAPIKey'],
 		);
 		
 		$this->client = new Client(array('headers' => $headers));
