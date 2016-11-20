@@ -85,7 +85,7 @@ class SiteController extends Controller
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if($model->upload()) {
 
-                $imageUrl = Url::home(true) . '/uploads/' . $model->imageFile->name;
+                $imageUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . '/uploads/' . $model->name;
 
             	$ci = new CognitiveInterface($imageUrl);
 
