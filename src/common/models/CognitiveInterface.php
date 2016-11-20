@@ -80,13 +80,13 @@ class CognitiveInterface {
 		}
 
 		$weights = array(
-			"anger" => -100.0,
-			"contempt" => -100.0,
-			"disgust" => -100.0,
-			"fear" => -100.0,
-			"happiness" => 100.0,
+			"anger" => -1.0,
+			"contempt" => -1.0,
+			"disgust" => -1.0,
+			"fear" => -1.0,
+			"happiness" => 1.0,
 			"neutral" => 0.0,
-			"sadness" => -80.0,
+			"sadness" => -0.8,
 			"surprise" => 0.0
 		);
 		
