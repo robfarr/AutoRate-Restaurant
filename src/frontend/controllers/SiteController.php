@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\ImageForm;
 use common\models\LoginForm;
-use common\models\Co
+use common\models\CognitiveInterface;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -205,6 +205,8 @@ class SiteController extends Controller
     }
 
 	public function actionTesting() {
-		$ci = new Co
+		$ci = new CognitiveInterface("http://cdn2.amerikanki.com/wp-content/uploads/2013/10/Smile.jpg");
+		$test_data = $ci->get_dominant_emotion();
+		return $this->render('test', ["test_data" => $test_data]);
 	}
 }
