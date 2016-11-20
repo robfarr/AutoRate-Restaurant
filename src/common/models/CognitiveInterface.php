@@ -33,7 +33,7 @@ class CognitiveInterface {
 			$request = $this->client->post($url, $body);
 			$response = json_decode($request->getBody()->getContents());
 			
-			if(empty(response)) {
+			if(empty($response)) {
 				return;
 			}
 			
