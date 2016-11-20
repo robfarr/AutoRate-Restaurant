@@ -79,26 +79,30 @@ class CognitiveInterface {
 			return -1;
 		}
 
-		$weights = array(
-			"anger" => -2.0,
-			"contempt" => -2.0,
-			"disgust" => -3.0,
-			"fear" => -4.0,
-			"happiness" => 3.0,
+		$values = array(
+			"anger" => -100.0,
+			"contempt" => -100.0,
+			"disgust" => -100.0,
+			"fear" => -100.0,
+			"happiness" => 100.0,
 			"neutral" => 0.0,
-			"sadness" => -1.0,
+			"sadness" => -100.0,
 			"surprise" => 0.0
 		);
 		
 		$total = 0.0;
-		$sum = 0.0;
 		
-		foreach($weights as $key => $value) {
-			$total += $value * $this->cognition_response->{$key};
-			$sum += abs($this->cognition_response->{$key});
+		foreach($values as $key => $value) {
+			
+			if($key == "surprise") {
+				$total += $total * $this->cognition_response->{key};
+			}
+			else {
+				$total += $value * $this->cognition_response->{$key};
+			}
 		}
 		
-		return ($total/$sum) * 100.0;
+		return $total;
 	}
 	
 	public function getDominantEmotion() {
