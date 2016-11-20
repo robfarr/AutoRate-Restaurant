@@ -30,7 +30,11 @@ class CognitiveInterface {
 		$request = $this->client->post($url, $body);
 
 		try {
-			$this->cognition_response = json_decode($request->getBody()->getContents())[0];
+			$this->cognition_response = json_decode($request->getBody()->getContents())[0]->scores;
+			
+			foreach($this->cognition_response as $key => $value) {
+				$this->cognition_response->{$key} = (float) $value;
+			}
 		}
 		catch (HttpException $ex) {
 			$this->cognition_response = null;
@@ -45,7 +49,7 @@ class CognitiveInterface {
 	}
 	
 	public function getEmotionValues() {
-		return $this->cognition_response->scores;
+		return $this->cognition_response;
 	}
 
 	public function getPercentileScore() {
@@ -55,15 +59,15 @@ class CognitiveInterface {
 			return -1;
 		}
 
-		$scores = $this->cognition_response->scores;
-		$anger = (float) $scores->anger;
-		$contempt = (float) $scores->contempt;
-		$disgust = (float) $scores->disgust;
-		$fear = (float) $scores->fear;
-		$happiness = (float) $scores->happiness;
-		$neutral = (float) $scores->neutral;
-		$sadness = (float) $scores->sadness;
-		$surprise = (float) $scores->surprise;
+		$scores = $this->cognition_response;
+		$anger = $scores->anger;
+		$contempt = $scores->contempt;
+		$disgust = $scores->disgust;
+		$fear = $scores->fear;
+		$happiness = $scores->happiness;
+		$neutral = $scores->neutral;
+		$sadness = $scores->sadness;
+		$surprise = $scores->surprise;
 
 
 	}
@@ -71,16 +75,16 @@ class CognitiveInterface {
 	public function getDominantEmotion() {
 		$dominant = array(
 			"emotion" => "anger",
-			"value" => (float) $this->cognition_response->scores->anger
+			"value" => $this->cognition_response->anger
 		);
 
-		foreach($this->cognition_response->scores as $key => $value) {
+		foreach($this->cognition_response as $key => $value) {
 
 			if($value > $dominant["value"]) {
 
 				$dominant = array(
 					"emotion" => $key,
-					"value" => (float) $value
+					"value" => $value
 				);
 			}
 		}
