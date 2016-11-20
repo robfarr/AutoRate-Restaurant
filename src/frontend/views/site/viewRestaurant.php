@@ -52,15 +52,17 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
     <div class="body-content">
 
         <div class="row">
-
-            <!-- Loop and display each rating image & emotion bars -->
+            
             <table class="table table-hover">
                 <tbody>
 
                     <?php foreach($reviews as $review){ ?>
                     <tr>
-                        <th width="100"><img src="<?= $review->image ?>" alt="Review Selfie"
-                                               class="img-thumbnail"></th>
+                        <th width="100">
+                            <a href="<?= $review->image ?>" title="Large Preview" target="_blank">
+                                <img src="<?= $review->image ?>" alt="Review Selfie" class="img-thumbnail" />
+                            </a>
+                        </th>
                         <td style="vertical-align: middle">
                             <div class="progress">
                                 <div class="progress-bar progress-bar-<?= $review->getColour() ?>" role="progressbar"
