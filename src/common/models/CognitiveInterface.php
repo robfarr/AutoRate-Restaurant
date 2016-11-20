@@ -80,13 +80,13 @@ class CognitiveInterface {
 		}
 
 		$values = array(
-			"anger" => -2.0,
-			"contempt" => -2.0,
-			"disgust" => -3.0,
-			"fear" => -4.0,
-			"happiness" => 3.0,
+			"anger" => -100.0,
+			"contempt" => -100.0,
+			"disgust" => -100.0,
+			"fear" => -100.0,
+			"happiness" => 100.0,
 			"neutral" => 0.0,
-			"sadness" => -1.0,
+			"sadness" => -100.0,
 			"surprise" => 0.0
 		);
 		
@@ -96,7 +96,7 @@ class CognitiveInterface {
 			$total += $value * $this->cognition_response->{$key};
 		}
 		
-		return $this->map($total, -4.0, 3.0, -100.0, 100.0);
+		return $total;
 	}
 	
 	private function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
