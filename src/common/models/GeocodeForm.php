@@ -8,7 +8,8 @@ class GeocodeForm extends Model {
 	public $longitude;
 	
 	public function found_location() {
-		$gi = new GeocodeInterface($latitude, $longitude);
+		$gi = new FinderInterface($latitude, $longitude);
+		return $gi->getRestaurants();
 	}
 }
 ?>
