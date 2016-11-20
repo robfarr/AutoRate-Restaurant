@@ -5,10 +5,10 @@ use yii\base\Model;
 
 class GeocodeForm extends Model {
 	public $latitude;
-	public $longtitude;
+	public $longitude;
 	
-	public function reverse_geocode() {
-		
+	public function found_location() {
+		$gi = new GeocodeInterface($latitude, $longitude);
 	}
 }
 ?>
