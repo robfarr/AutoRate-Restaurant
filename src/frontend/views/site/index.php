@@ -78,7 +78,7 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
                     <button class="close" data-dismiss="modal"></button>
                     <h4 class="modal-title">
                         <span class="glyphicon glyphicon-camera"></span>
-                        Rate Restaurant
+                        AutoRate Restaurant
                     </h4>
                 </div>
 
@@ -125,7 +125,7 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-camera"></span>
-                            Rate Restaurant
+                            AutoRate Restaurant
                         </button>
                     </div>
 
