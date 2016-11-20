@@ -5,9 +5,12 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use frontend\models\ImageForm;
 use common\models\LoginForm;
+use common\models\Co
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -72,7 +75,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+         $model = new ImageForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('index', ['model' => $model]);
     }
 
     /**
@@ -190,4 +204,7 @@ class SiteController extends Controller
 
     }
 
+	public function actionTesting() {
+		$ci = new Co
+	}
 }
