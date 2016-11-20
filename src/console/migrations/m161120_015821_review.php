@@ -2,13 +2,14 @@
 
 use yii\db\Migration;
 
-class m161120_015820_review extends Migration
+class m161120_015821_review extends Migration
 {
     public function up()
     {
 
 	    $this->createTable('review', [
 		    'id' => $this->primaryKey(),
+		    'image' => $this->string()->notNull(),
 		    'restaurant' => $this->integer()->notNull(),
 		    'user' => $this->integer()->notNull(),
 	        'anger' => $this->integer(),
