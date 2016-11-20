@@ -90,6 +90,8 @@ class CognitiveInterface {
 			"surprise" => 0.0
 		);
 		
+		$total = 0.0;
+		
 		foreach($weights as $key => $value) {
 			$total += $value * $this->cognition_response->{$key} * 100.0;
 		}
