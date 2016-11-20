@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\ImageForm;
 use common\models\LoginForm;
+use common\models\Co
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -203,5 +204,7 @@ class SiteController extends Controller
 
     }
 
-
+	public function actionTesting() {
+		$ci = new Co
+	}
 }
