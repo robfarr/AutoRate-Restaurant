@@ -57,7 +57,7 @@ class Restaurant extends \yii\db\ActiveRecord
 	/**
 	 * @return array
 	 */
-    public function getAggregateRankings()
+    private function getAggregateRankings()
     {
 
 	    $reviews = $this->reviews;
