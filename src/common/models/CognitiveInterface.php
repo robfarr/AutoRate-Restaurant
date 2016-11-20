@@ -89,7 +89,16 @@ class CognitiveInterface {
 		$sadness = $scores->sadness;
 		$surprise = $scores->surprise;
 
-
+		$weights = array(
+			"anger" => -2.0,
+			"contempt" => -2.0,
+			"disgust" => -3.0,
+			"fear" => -4.0,
+			"happiness" => 3.0,
+			"neutral" => 0.0,
+			"sadness" => -1.0,
+			"surprise" => 0.0
+		);
 	}
 	
 	public function getDominantEmotion() {
