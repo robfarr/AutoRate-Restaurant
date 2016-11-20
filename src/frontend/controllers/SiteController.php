@@ -2,7 +2,9 @@
 namespace frontend\controllers;
 
 use app\models\Restaurant;
+use app\models\Review;
 use Yii;
+use yii\helpers\Url;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -77,12 +79,24 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-         $model = new ImageForm();
+	    $model = new ImageForm();
 
-        if (Yii::$app->request->isPost) {
+        if(Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if ($model->upload()) {
-                // file is uploaded successfully
+            if($model->upload()) {
+
+                $imageUrl = Url::home(true) . '/uploads/' . $model->imageFile->name;
+
+            	$ci = new CognitiveInterface($imageUrl);
+
+            	$review = new Review([
+					'image'         => Url::home() . '/uploads/' . $model->imageFile->name,
+	                'restaurant'    => 1,   // TODO
+	                'user'          => Yii::$app->user->id,
+	                'score'         => $ci->getEmotionValues(),
+	                'emotion'       => $ci->getDominantEmotion(),
+	            ]);
+
                 return;
             }
         }

@@ -21,7 +21,7 @@ class ImageForm extends Model
     public function upload()
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            $this->imageFile->saveAs('uploads/' . md5(rand()) . '.' . $this->imageFile->extension);
             return true;
         } else {
             return false;

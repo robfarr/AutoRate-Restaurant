@@ -78,37 +78,53 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                     </h4>
                 </div>
 
-                <?php $form = ActiveForm::begin(['layout' => 'horizontal','options' => ['enctype' => 'multipart/form-data']]) ?>
+                <?php if(Yii::$app->user->isGuest) { ?>
 
-                <div class="modal-body">
+                    <div class="modal-body">
+                        <p>You need to sign in before you can add reviews.</p>
+                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-3" for="restaurant">Select Restaurant</label>
-                        <div class="col-sm-9">
-                            <select name="restaurant" class="form-control">
-                                <?php foreach ($restaurants as $r) { ?>
-                                    <option value="<?= $r->id ?>"><?= $r->name ?></option>
-                                <?php } ?>
-                            </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a href="<?= Url::to(['site/login', 'restaurant' => $restaurant->id]) ?>" title="Sign In"
+                           class="btn btn-success">Sign In</a>
+                    </div>
+
+                <?php }else{ ?>
+
+                    <?php $form = ActiveForm::begin(['layout' => 'horizontal','options' => ['enctype' => 'multipart/form-data']]) ?>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-3" for="restaurant">Select Restaurant</label>
+                            <div class="col-sm-9">
+                                <select name="restaurant" class="form-control">
+                                    <?php foreach ($restaurants as $r) { ?>
+                                        <option value="<?= $r->id ?>"><?= $r->name ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
                         </div>
+
+                        <div class="form-group">
+                            <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*'])->label("Take 
+                            Selfie") ?>
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
-                        <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*'])->label("Take 
-                        Selfie") ?>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-camera"></span>
+                            Rate Restaurant
+                        </button>
                     </div>
 
-                </div>
+                    <?php ActiveForm::end() ?>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">
-                        <span class="glyphicon glyphicon-camera"></span>
-                        Rate Restaurant
-                    </button>
-                </div>
-
-                <?php ActiveForm::end() ?>
+                <?php } ?>
 
             </div>
         </div>
