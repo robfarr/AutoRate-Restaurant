@@ -204,7 +204,5 @@ class SiteController extends Controller
 
     }
 
-	public function actionTesting() {
-		$ci = new Co
-	}
+
 }
