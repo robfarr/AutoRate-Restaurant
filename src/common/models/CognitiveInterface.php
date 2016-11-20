@@ -43,6 +43,10 @@ class CognitiveInterface {
 	public function getImageURL() {
 		return $this->image_url;
 	}
+	
+	public function getEmotionValues() {
+		return $this->cognition_response->scores;
+	}
 
 	public function getPercentileScore() {
 
