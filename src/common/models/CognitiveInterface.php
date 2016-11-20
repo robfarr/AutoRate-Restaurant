@@ -9,10 +9,10 @@ class CognitiveInterface {
 	
 	public function __construct($image_url) {
 		$this->image_url = $image_url;
-		$this->establish_cognition();
+		$this->establishCognition();
 	}
 	
-	private function establish_cognition() {
+	private function establishCognition() {
 		$url = 'https://api.projectoxford.ai/emotion/v1.0/recognize';
 		
 		$headers = array(
@@ -40,11 +40,11 @@ class CognitiveInterface {
 		}
 	}
 	
-	public function get_image_url() {
+	public function getImageURL() {
 		return $this->image_url;
 	}
 	
-	public function get_percentile_score() {
+	public function getPercentileScore() {
 		
 		if(is_null($this->cognition_response)) {
 			echo "Cognition has not yet been established. ";
@@ -64,7 +64,7 @@ class CognitiveInterface {
 		
 	}
 	
-	public function get_dominant_emotion() {
+	public function getDominantEmotion() {
 		$dominant = array(
 			"emotion" => "anger", 
 			"value" => (float) $this->cognition_response->scores->anger
