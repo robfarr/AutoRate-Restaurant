@@ -21,9 +21,13 @@ class CognitiveInterface {
 			'Ocp-Apim-Subscription-Key' => \Yii::$app->params['emotionAPIKey'],
 		);
 		
+		$body = array(
+			'json' => array('url' => $image_url)
+		);
+		
 		$this->client = new Client(array('headers' => $headers));
 		
-		$request = $this->client->post($url);
+		$request = $this->client->post($url, $body);
 		
 		try {
 			$this->cognition_response = json_decode($request->getBody()->getContents());
