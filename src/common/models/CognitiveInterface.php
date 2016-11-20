@@ -48,7 +48,7 @@ class CognitiveInterface {
 			
 			$this->numFaces = sizeof($response);
 			
-			foreach($scores as $key => $value) {
+			foreach($this->cognition_response as $key => $value) {
 				$this->cognition_response->{$key} = $value/$this->numFaces;
 			}
 		}
