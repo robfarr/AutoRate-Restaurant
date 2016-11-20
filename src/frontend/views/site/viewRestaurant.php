@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Rate a Restaurant &middot; Rate your restaurant meal by uploading a selfie.';
+$this->title = 'Rate a Restaurant - Restaurant Name';
 ?>
 <div class="site-index">
 
