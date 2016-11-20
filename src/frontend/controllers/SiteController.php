@@ -241,7 +241,8 @@ class SiteController extends Controller
 			"test_data" => [
 				'num faces' => $ci->getNumFaces(),
 				'raw' => $ci->getEmotionValues(),
-				'dominant' => $ci->getDominantEmotion()
+				'dominant' => $ci->getDominantEmotion(),
+				'score' => $ci->getPercentileScore()
 			]
 		]
 		);

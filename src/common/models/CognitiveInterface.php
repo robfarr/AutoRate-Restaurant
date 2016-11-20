@@ -52,9 +52,6 @@ class CognitiveInterface {
 				$this->cognition_response->{$key} = $value/$this->numFaces;
 			}
 		}
-		catch (HttpException $ex) {
-			$this->cognition_response = null;
-		}
 		catch(\InvalidArgumentException $ex) {
 			$this->cognition_response = null;
 		}
