@@ -60,6 +60,23 @@ class CognitiveInterface {
 			return -1;
 		}
 		
+		$anger = $this->cognition_response->anger;
+		$contempt = $this->cognition_response->contempt;
+		$disgust = $this->cognition_response->disgust;
+		$fear = $this->cognition_response->fear;
+		$happiness = $this->cognition_response->happiness;
+		$neutral = $this->cognition_response->neutral;
+		$sadness = $this->cognition_response->sadness;
+		$surprise = $this->cognition_response->surprise;
+		
+		$anger_weight = -2.0;
+		$contempt_weight = -2.0;
+		$disgust_weight = -3.0;
+		$fear_weight = -3.0;
+		$happiness_weight = 2.0;
+		$neutral_weight = 2.0;
+		$sadness_weight = -1.0;
+		$surprise_weight = 1.0;
 	}
 }
 ?>
