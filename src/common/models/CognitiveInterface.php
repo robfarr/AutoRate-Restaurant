@@ -30,10 +30,25 @@ class CognitiveInterface {
 		$request = $this->client->post($url, $body);
 
 		try {
-			$this->cognition_response = json_decode($request->getBody()->getContents())[0]->scores;
+			$response = json_decode($request->getBody()->getContents());
+			$this->cognition_response = array();
 			
-			foreach($this->cognition_response as $key => $value) {
-				$this->cognition_response->{$key} = (float) $value;
+			foreach($response[0]->scores as $key => $value) {
+				$this->cognition_response[$key] = (float) 0;
+			}
+			
+			foreach($response as $face) {
+				$scores = $face->scores;
+				
+				foreach($scores as $key => $value) {
+					$this->cognition_response[$key] += (float) $value;
+				}
+			}
+			
+			$size = sizeof($this->cognition_response);
+			
+			foreach($scores as $key => $value) {
+				$this->cognition_response[$key] = $value/$size;
 			}
 		}
 		catch (HttpException $ex) {
