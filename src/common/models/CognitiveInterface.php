@@ -1,7 +1,9 @@
 <?php
 namespace common\models;
+use GuzzleHttp\Client;
 
 class CognitiveInterface {
+	private $client;
 	private $image_url;
 	private $cognition_response;
 	
@@ -11,10 +13,7 @@ class CognitiveInterface {
 	}
 	
 	private function establish_cognition() {
-		require_once 'HTTP/Request2.php';
-		
-		$request = new Http_Request2('https://api.projectoxford.ai/emotion/v1.0/recognize');
-		$url = $request->getUrl();
+		$url = 'https://api.projectoxford.ai';
 		
 		$headers = array(
 			// Request headers
@@ -22,21 +21,14 @@ class CognitiveInterface {
 			'Ocp-Apim-Subscription-Key' => '{' . \Yii::$app->params['emotionAPIKey'] . '}',
 		);
 		
-		$request->setHeader($headers);
+		$this->client = new Client(url, array(
+			'headers' => $headers,
+		));
 		
-		$parameters = array(
-			// Request parameters
-		);
-		
-		$url->setQueryVariables($parameters);
-		
-		$request->setMethod(HTTP_Request2::METHOD_POST);
-		
-		// Request body
-		$request->setBody("{" . $this->image_url . "}");
+		$request = $this->client->post('/emotion/v1.0/recognize');
 		
 		try {
-			$this->cognition_response = json_decode($request->send());
+			$this->cognition_response = json_decode($request->getBody()->getContents());
 		}
 		catch (HttpException $ex) {
 			$this->cognition_response = null;
