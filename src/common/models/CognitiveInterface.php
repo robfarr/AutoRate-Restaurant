@@ -95,6 +95,7 @@ class CognitiveInterface {
 		
 		foreach($weights as $key => $value) {
 			$val = $value * $this->cognition_response->{$key};
+			$total += $val;
 			$sum += abs($value);
 		}
 		
