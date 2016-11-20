@@ -119,8 +119,8 @@ class CognitiveInterface {
 	}
 	
 	public function calculateLinearMap($xa, $xb, $ya, $yb) {
-		$xdiff = $xa - $xb;
-		$ydiff = $ya - $yb;
+		$xdiff = $xb - $xa;
+		$ydiff = $yb - $ya;
 		$coeff = $ydiff/$xdiff;
 		$diff = $ya - ($xa * $coeff);
 		
