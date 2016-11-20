@@ -39,7 +39,7 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
             ?>
             <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?= abs
             ($aggregateScore) ?>%">
-                <span><?= abs($aggregateScore) ?>%</span>
+                <span><?= round(abs($aggregateScore)) ?>%</span>
             </div>
         </div>
 
@@ -67,7 +67,8 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
                                      style="width:
                                     <?=
                                     $review->getScoreMagnitude() ?>%">
-                                    <span><?= $review->getScoreMagnitude() ?>% <?= ucfirst($review->emotion) ?></span>
+                                    <span><?= round(abs($review->getScoreMagnitude())) ?>% <?= ucfirst
+                                        ($review->emotion) ?></span>
                                 </div>
                             </div>
                         </td>

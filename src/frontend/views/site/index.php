@@ -48,7 +48,7 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                                     <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar"
                                          style="width:
                                         <?= abs($value) ?>%">
-                                        <span><?= abs($value) ?>%</span>
+                                        <span><?= round(abs($value)) ?>%</span>
                                     </div>
                                 </div>
                             <?php }else{ ?>
