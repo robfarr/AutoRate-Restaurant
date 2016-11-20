@@ -22,7 +22,7 @@ class CognitiveInterface {
 		);
 		
 		$body = array(
-			'json' => array('url' => $image_url)
+			'json' => array('url' => $this->image_url)
 		);
 		
 		$this->client = new Client(array('headers' => $headers));
