@@ -15,7 +15,7 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
     <div class="jumbotron">
         <h1>Rate a Restaurant</h1>
 
-        <p class="lead">Rate your restaurant meal by uploading a selfie.</p>
+        <p class="lead">Automagically rate your restaurant meal using machine learning by uploading a selfie.</p>
 
         <button class="btn btn-lg btn-success" data-toggle="modal" data-target="#submit-modal">
             <span class="glyphicon glyphicon-camera"></span>

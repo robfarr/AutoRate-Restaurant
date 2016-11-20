@@ -68,7 +68,15 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= date('Y') ?></p>
+        <p class="pull-left">
+            &copy;
+            <a href="http://robfarr.me/" target="_blank">Rob Farr</a>,
+            <a href="http://oreid.net/" target="_blank">Omar Reid</a>,
+            <a href="https://github.com/bishabosha" target="_blank">Jamie Thompson</a> &amp;
+            <a href="https://github.com/brandonhewer" target="_blank">Brandon Hewer</a>
+            <?= date('Y') ?>
+        </p>
+        <p class="pull-right">powered by <a href="https://www.microsoft.com/cognitive-services/" target="_blank">Microsoft Cognitive Services</a></p>
     </div>
 </footer>
 
