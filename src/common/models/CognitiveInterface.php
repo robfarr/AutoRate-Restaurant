@@ -114,7 +114,7 @@ class CognitiveInterface {
 			}
 		}
 		
-		return map($total, $min, $max, -100.0, 100.0);
+		return $this->map($total, $min, $max, -100.0, 100.0);
 	}
 	
 	function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
