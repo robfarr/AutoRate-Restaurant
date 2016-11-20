@@ -118,3 +118,8 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/* min width on progress bars to make text visible */
+.progress-bar {
+    min-width: 25px;
+}
