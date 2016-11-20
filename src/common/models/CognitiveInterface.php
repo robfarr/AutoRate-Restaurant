@@ -48,6 +48,18 @@ class CognitiveInterface {
 	public function get_subscription_key() {
 		return $this->subscription_key;
 	}
+	
+	public function get_image_url() {
+		return $this->image_url;
+	}
+	
+	public function get_percentile_score() {
+		
+		if(is_null($this->cognition_response)) {
+			echo "Cognition has not yet been established. ";
+			return -1;
+		}
+		
+	}
 }
-
 ?>
