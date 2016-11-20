@@ -99,19 +99,6 @@ class CognitiveInterface {
 		return $total;
 	}
 	
-	private function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
-		$fromRange = $fromHigh - $fromLow;
-		$toRange = $toHigh - $toLow;
-		$scaleFactor = $toRange / $fromRange;
-	
-		// Re-zero the value within the from range
-		$tmpValue = $value - $fromLow;
-		// Rescale the value to the to range
-		$tmpValue *= $scaleFactor;
-		// Re-zero back to the to range
-		return $tmpValue + $toLow;
-	}
-	
 	public function getDominantEmotion() {
 		$dominant = array(
 			"emotion" => "anger",
