@@ -87,7 +87,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()]);
+        return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()->all()]);
     }
 
     /**
