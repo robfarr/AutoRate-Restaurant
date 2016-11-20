@@ -9,7 +9,7 @@ class CognitiveInterface {
 	public function __construct($subscription_key, $image_url) {
 		$this->subscription_key = $subscription_key;
 		$this->image_url = $image_url;
-		establish_cognition();
+		$this->establish_cognition();
 	}
 	
 	private function establish_cognition() {
@@ -21,7 +21,7 @@ class CognitiveInterface {
 		$headers = array(
 			// Request headers
 			'Content-Type' => 'application/json',
-			'Ocp-Apim-Subscription-Key' => '{' . get_subscription_key() . '}',
+			'Ocp-Apim-Subscription-Key' => '{' . $this->get_subscription_key() . '}',
 		);
 		
 		$request->setHeader($headers);
@@ -38,7 +38,7 @@ class CognitiveInterface {
 		$request->setBody("{" . $this->image_url . "}");
 		
 		try {
-			$this->cognition_response = json_decoe($request->send());
+			$this->cognition_response = json_decode($request->send());
 		}
 		catch (HttpException $ex) {
 			echo $ex;
@@ -77,6 +77,43 @@ class CognitiveInterface {
 		$neutral_weight = 2.0;
 		$sadness_weight = -1.0;
 		$surprise_weight = 1.0;
+	}
+	
+	public function get_dominant_emotion() {
+		$emotions_map = $this->get_emotions_map();
+		$dominant = array(
+			"emotion" => "anger", 
+			"value" => $this->cognition_response->anger	
+		);
+		
+		foreach($arr as $key => $value) {
+			
+			if($value > $dominant[$key]) {
+				
+				$dominant = array(
+					"emotion" => $key,
+					"value" => $value
+				);
+			}
+			else if($value == $dominant[$key]) {
+				$dominant[$key] = $value;
+			}
+		}
+		
+		return $dominant;
+	}
+	
+	private function get_emotions_map() {
+		return array(
+			"anger" => 	$this->cognition_response->anger,
+			"contempt" => $this->cognition_response->contempt,
+			"disgust" => $this->cognition_response->disgust,
+			"fear" => $this->cognition_response->fear,
+			"happiness" => $this->cognition_response->happiness,
+			"neutral" => $this->cognition_response->neutral,
+			"sadness" => $this->cognition_response->sadness,
+			"surprise" => $this->cognition_response->surprise
+		);
 	}
 }
 ?>
