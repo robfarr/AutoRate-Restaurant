@@ -91,7 +91,7 @@ class SiteController extends Controller
             	$ci = new CognitiveInterface($imageUrl);
 
 		if(!is_array($ci->getDominantEmotion()) || !array_key_exists("emotion", $ci->getDominantEmotion())) {
-			Yii::$app->session->setFlash("error", "Invalid image, make sure you include your face.");
+			Yii::$app->session->setFlash("error", "Invalid image, make sure your face is included in the image!");
 			return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()->all()]);
 		}
 
