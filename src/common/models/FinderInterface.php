@@ -5,17 +5,15 @@ use GuzzleHttp\Client;
 class FinderInterface {
 	private $latitude;
 	private $longitude;
-	private $entityID;
-	private $entityType;
 	private $client;
-	private $nearby_restaurants;
 	private $restaurants;
 	
 	public function __construct($latitude, $longitude) {
 		$this->latitude = $latitude;
 		$this->longitude = $longitude;
 		$this->client = new Client();
-		$this->find_location();
+		$this->establish_client();
+		$this->findLocation();
 	}
 	
 	public function establish_client() {
@@ -29,18 +27,27 @@ class FinderInterface {
 		$this->client = new Client(array('headers' => $headers));
 	}
 	
-	public function get_restaurants() {
+	public function getRestaurants() {
 		return $this->restaurants;
 	}
 	
-	private function find_location() {
-		
+	private function findLocation() {
+		try {
+			$request = $this->client->get("/geocode", [
+				'lat' => $this->latitude,
+				'lon' => $this->longitude
+			]);
+			$this->restaurants = array();
+			$response = json_decode($request->getBody()->getContents());
+			$this->parse_location($response);
+		} catch (\Exception $e) {}
 	}
 	
 	private function parse_location($location_details) {
-		$this->restaurants=array();
+		if (!isset($location_details->nearby_restaurants)) {
+			return;
+		}
 		$all_restaurants = $location_details->nearby_restaurants;
-		
 		foreach($all_restaurants as $value) {
 			$id = $all_restaurants->id;
 			$name = $all_restaurants->name;
