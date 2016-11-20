@@ -96,25 +96,23 @@ class CognitiveInterface {
 		
 		foreach($weights as $key => $value) {
 			$total += $value * $this->cognition_response->{$key};
-			
-			$potential = $value;
-			
+						
 			if($max != null) {
-				$max = max($max, $potential);
+				$max = max($max, $value);
 			}
 			else {
-				$max = $potential;
+				$max = $value;
 			}
 			
 			if($min != null) {
-				$min = min($min, $potential);
+				$min = min($min, $value);
 			}
 			else {
-				$min = $potential;
+				$min = $value;
 			}
 		}
 		
-		return $this->map($total, $min, $max, -1.0, 1.0) * 100;
+		return $this->map($total, $min, $max, -1.0, 1.0) * 100.0;
 	}
 	
 	function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
