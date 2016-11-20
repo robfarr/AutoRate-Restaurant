@@ -2,12 +2,10 @@
 namespace common\models;
 
 class CognitiveInterface {
-	private $subscription_key;
 	private $image_url;
 	private $cognition_response;
 	
-	public function __construct($subscription_key, $image_url) {
-		$this->subscription_key = $subscription_key;
+	public function __construct($image_url) {
 		$this->image_url = $image_url;
 		$this->establish_cognition();
 	}
@@ -21,7 +19,7 @@ class CognitiveInterface {
 		$headers = array(
 			// Request headers
 			'Content-Type' => 'application/json',
-			'Ocp-Apim-Subscription-Key' => '{' . $this->get_subscription_key() . '}',
+			'Ocp-Apim-Subscription-Key' => '{' . \Yii::$app->params['emotionAPIKey'] . '}',
 		);
 		
 		$request->setHeader($headers);
@@ -41,12 +39,11 @@ class CognitiveInterface {
 			$this->cognition_response = json_decode($request->send());
 		}
 		catch (HttpException $ex) {
-			echo $ex;
+			$this->cognition_response = null;
 		}
-	}
-	
-	public function get_subscription_key() {
-		return $this->subscription_key;
+		catch(\InvalidArgumentException $ex) {
+			$this->cognition_response = null;
+		}
 	}
 	
 	public function get_image_url() {
@@ -69,51 +66,27 @@ class CognitiveInterface {
 		$sadness = $this->cognition_response->sadness;
 		$surprise = $this->cognition_response->surprise;
 		
-		$anger_weight = -2.0;
-		$contempt_weight = -2.0;
-		$disgust_weight = -3.0;
-		$fear_weight = -3.0;
-		$happiness_weight = 2.0;
-		$neutral_weight = 2.0;
-		$sadness_weight = -1.0;
-		$surprise_weight = 1.0;
+		
 	}
 	
 	public function get_dominant_emotion() {
-		$emotions_map = $this->get_emotions_map();
 		$dominant = array(
 			"emotion" => "anger", 
 			"value" => $this->cognition_response->anger	
 		);
 		
-		foreach($arr as $key => $value) {
+		foreach($this->cognition_response as $key => $value) {
 			
-			if($value > $dominant[$key]) {
+			if($value > $dominant["value"]) {
 				
 				$dominant = array(
 					"emotion" => $key,
 					"value" => $value
 				);
 			}
-			else if($value == $dominant[$key]) {
-				$dominant[$key] = $value;
-			}
 		}
 		
 		return $dominant;
-	}
-	
-	private function get_emotions_map() {
-		return array(
-			"anger" => 	$this->cognition_response->anger,
-			"contempt" => $this->cognition_response->contempt,
-			"disgust" => $this->cognition_response->disgust,
-			"fear" => $this->cognition_response->fear,
-			"happiness" => $this->cognition_response->happiness,
-			"neutral" => $this->cognition_response->neutral,
-			"sadness" => $this->cognition_response->sadness,
-			"surprise" => $this->cognition_response->surprise
-		);
 	}
 }
 ?>
