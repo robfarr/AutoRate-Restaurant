@@ -114,7 +114,7 @@ class CognitiveInterface {
 			}
 		}
 		
-		return 100.0 + ($total-$min)*($max-$min)/(200.0);
+		return (($total - $min) / (-100.0 - $min) * (100.0 - $max)) + 100.0;
 	}
 	
 	public function getDominantEmotion() {
