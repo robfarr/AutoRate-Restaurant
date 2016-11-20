@@ -91,39 +91,14 @@ class CognitiveInterface {
 		);
 		
 		$total = 0.0;
-		$max = null;
-		$min = null;
+		$sum = 0.0;
 		
 		foreach($weights as $key => $value) {
-			$total += $value * $this->cognition_response->{$key} * 100.0;
-			
-			$potential = $value * 100.0;
-			
-			if($max != null) {
-				$max = max($max, $potential);
-			}
-			else {
-				$max = $potential;
-			}
-			
-			if($min != null) {
-				$min = min($min, $potential);
-			}
-			else {
-				$min = $potential;
-			}
+			$total += $value * $this->cognition_response->{$key};
+			$sum += abs($this->cognition_response->{$key});
 		}
 		
-		return $this->map($total, $min, $max, -100.0, 100.0);
-	}
-	
-	function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
-		$fromRange = $fromHigh - $fromLow;
-		$toRange = $toHigh - $toLow;
-		$scaleFactor = $toRange / $fromRange;
-		$tmpValue = $value - $fromLow;
-		$tmpValue *= $scaleFactor;
-		return $tmpValue + $toLow;
+		return ($total/$sum) * 100.0;
 	}
 	
 	public function getDominantEmotion() {
