@@ -80,14 +80,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-	    $model = new GeocodeForm();
+        $model = new ImageForm();
 
-	    if(Yii::$app->request->isAjax) {
-	    	
-	    }
-	    
-	    $model = new ImageForm();
-	    
         if(Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if($model->upload()) {
@@ -97,14 +91,14 @@ class SiteController extends Controller
             	$ci = new CognitiveInterface($imageUrl);
 
             	$review = new Review([
-					'image'         => Url::home() . '/uploads/' . $model->imageFile->name,
-	                'restaurant'    => 1,   // TODO
-	                'user'          => Yii::$app->user->id,
+			'image'         => $imageUrl,
 	                'score'         => $ci->getPercentileScore(),
-	                'emotion'       => $ci->getDominantEmotion()["emotion"],
-	            ]);
+	        	'emotion'       => $ci->getDominantEmotion()["emotion"],
+	        ]);
+		$review->user = Yii::$app->user->id;
+		$review->restaurant = Restaurant::findOne(1)->id; // TODO
+		$review->save();
 
-                return;
             }
         }
 
