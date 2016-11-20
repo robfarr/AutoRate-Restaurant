@@ -33,6 +33,7 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
 
             $word = 'are neutral about';
             if($aggregateScore > 5) $word = 'like';
+            if($aggregateScore > 60) $word = 'love';
             if($aggregateScore < -5) $word = 'dislike';
 
         ?>
@@ -52,7 +53,7 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
         </div>
 
         <?php }else{ ?>
-            <p>No reviews yet, be the first to add yours.</p>
+            <p>No reviews yet, be the first to add yours!</p>
         <?php } ?>
 
     </div>
