@@ -16,7 +16,7 @@ class CognitiveInterface {
 		$url = 'https://api.projectoxford.ai';
 		
 		$headers = array(
-			// Request headers
+			// Request header
 			'Content-Type' => 'application/json',
 			'Ocp-Apim-Subscription-Key' => '{' . \Yii::$app->params['emotionAPIKey'] . '}',
 		);
