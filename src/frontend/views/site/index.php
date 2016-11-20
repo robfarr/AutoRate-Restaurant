@@ -11,7 +11,9 @@ $this->title = 'Rate a Restaurant &middot; Rate your restaurant meal by uploadin
 
         <p class="lead">Rate your restaurant meal by uploading a selfie.</p>
 
-        <p><a class="btn btn-lg btn-success" href="#">Rate Restaurant</a></p>
+        <p><a class="btn btn-lg btn-success" href="#"><span class="glyphicon glyphicon-camera"></span> Rate
+                    Restaurant</a></p>
+
     </div>
 
     <div class="body-content">
@@ -23,25 +25,49 @@ $this->title = 'Rate a Restaurant &middot; Rate your restaurant meal by uploadin
 
                     <tr>
                         <th>Restaurant Name</th>
-                        <td>55% excited</td>
+                        <td width="75%">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%">
+                                    <span>55% Excited</span>
+                                </div>
+                            </div>
+                        </td>
                         <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
                     </tr>
 
                     <tr>
                         <th>Restaurant Name</th>
-                        <td>55% excited</td>
+                        <td width="75%">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%">
+                                    <span>55% Excited</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Restaurant Name</th>
+                        <td width="75%">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%">
+                                    <span>55% Excited</span>
+                                </div>
+                            </div>
+                        </td>
                         <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
                     </tr>
 
                     <tr>
                         <th>Restaurant Name</th>
-                        <td>55% excited</td>
-                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
-                    </tr>
-
-                    <tr>
-                        <th>Restaurant Name</th>
-                        <td>55% excited</td>
+                        <td width="75%">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%">
+                                    <span>55% Excited</span>
+                                </div>
+                            </div>
+                        </td>
                         <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
                     </tr>
 
