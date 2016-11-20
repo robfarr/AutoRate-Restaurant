@@ -114,17 +114,7 @@ class CognitiveInterface {
 			}
 		}
 		
-		$map = $this->calculateLinearMap($min, $max, -100.0, 100.0);
-		return ($total * $map[0]) + $map[1];
-	}
-	
-	public function calculateLinearMap($xa, $xb, $ya, $yb) {
-		$xdiff = $xb - $xa;
-		$ydiff = $yb - $ya;
-		$coeff = $ydiff/$xdiff;
-		$diff = $ya - ($xa * $coeff);
-		
-		return array($coeff, $diff);
+		return ((($total - $min) * 200.0) / ($max-$min)) - 100.0;
 	}
 	
 	public function getDominantEmotion() {
