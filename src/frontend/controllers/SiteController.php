@@ -90,14 +90,13 @@ class SiteController extends Controller
 
             	$ci = new CognitiveInterface($imageUrl);
 
-            	$review = new Review([
-			'image'         => $imageUrl,
-	                'score'         => $ci->getPercentileScore(),
-	        	'emotion'       => $ci->getDominantEmotion()["emotion"],
-	        ]);
-		$review->user = Yii::$app->user->id;
-		$review->restaurant = Restaurant::findOne(1)->id; // TODO
-		$review->save();
+	            $review = new Review();
+	            $review->image = $imageUrl;
+	            $review->score = $ci->getPercentileScore();
+	            $review->emotion = $ci->getDominantEmotion()["emotion"];
+				$review->user = Yii::$app->user->id;
+				$review->restaurant = Restaurant::findOne($_POST['restaurant'])->id;
+				$review->save(false);
 
             }
         }

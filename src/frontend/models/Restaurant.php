@@ -84,6 +84,8 @@ class Restaurant extends \yii\db\ActiveRecord
     public function getMostFrequentEmotion()
     {
 
+    	if(count($this->reviews) <= 0) return "";
+
 	    $emotions = [];
 	    foreach($this->reviews as $review) {
 	    	if(isset($emotions[$review->emotion])) {

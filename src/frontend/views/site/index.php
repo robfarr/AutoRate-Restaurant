@@ -53,9 +53,11 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
                                 <p>No reviews yet, be the first to add yours.</p>
                             <?php } ?>
                         </td>
-                        <td><a href="<?= Url::to(['site/view-restaurant', 'restaurant' => $restaurant->id]) ?>"><span
-                                    class="glyphicon
-                            glyphicon-chevron-right"></span></a></td>
+                        <td>
+                            <?php if($restaurant->getReviews()->count() > 0) { ?>
+                            <a href="<?= Url::to(['site/view-restaurant', 'restaurant' => $restaurant->id]) ?>"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <?php } ?>
+                        </td>
                     </tr>
                     <?php } ?>
 
