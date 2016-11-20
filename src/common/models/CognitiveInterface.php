@@ -32,6 +32,11 @@ class CognitiveInterface {
 		try {
 			$request = $this->client->post($url, $body);
 			$response = json_decode($request->getBody()->getContents());
+			
+			if(empty($response)) {
+				return;
+			}
+			
 			$this->cognition_response = new \stdClass();
 			
 			foreach($response[0]->scores as $key => $value) {

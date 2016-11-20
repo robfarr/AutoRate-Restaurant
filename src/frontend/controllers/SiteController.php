@@ -90,13 +90,28 @@ class SiteController extends Controller
 
             	$ci = new CognitiveInterface($imageUrl);
 
+		if(!is_array($ci->getDominantEmotion()) || !array_key_exists("emotion", $ci->getDominantEmotion())) {
+			Yii::$app->session->setFlash("error", "Invalid image, make sure you include your face.");
+			return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()->all()]);
+		}
+
+		    $restaurant = Restaurant::findOne($_POST['restaurant']);
+
 	            $review = new Review();
 	            $review->image = $imageUrl;
 	            $review->score = $ci->getPercentileScore();
 	            $review->emotion = $ci->getDominantEmotion()["emotion"];
 				$review->user = Yii::$app->user->id;
-				$review->restaurant = Restaurant::findOne($_POST['restaurant'])->id;
+				$review->restaurant = $restaurant->id;
 				$review->save(false);
+
+                $reviews = $restaurant->reviews;
+
+                    return $this->render('viewRestaurant', [
+                            'model'         => $restaurant,
+                            'reviews'       => $reviews,
+                        'mostCommon'    => $restaurant->getMostFrequentEmotion(),
+                    ]);
 
             }
         }
