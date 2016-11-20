@@ -207,47 +207,11 @@ class SiteController extends Controller
 		    $restaurant = Restaurant::findOne($restaurant);
 		    $reviews = $restaurant->reviews;
 
-		    // Determine aggregate rankings.
-		    $rankings = [
-		    	'anger'     => 0,
-		        'contempt'  => 0,
-		        'disgust'   => 0,
-		        'fear'      => 0,
-		        'happiness' => 0,
-		        'neutral'   => 0,
-		        'sadness'   => 0,
-		    ];
-		    foreach($reviews as $r) {
-		        $rankings['anger'] += $r->anger;
-			    $rankings['contempt'] += $r->contempt;
-			    $rankings['disgust'] += $r->disgust;
-			    $rankings['fear'] += $r->fear;
-			    $rankings['happiness'] += $r->happiness;
-			    $rankings['neutral'] += $r->neutral;
-			    $rankings['sadness'] += $r->sadness;
-		    }
-		    
-		    $mostCommon = array_keys($rankings, max($rankings))[0];
-		    $verbs = [
-		    	'anger'     =>  'angry',
-		        'contempt'  =>  'contempt',
-		        'disgust'   =>  'disgusted',
-		        'fear'      =>  'fearful',
-		        'happiness' =>  'happy',
-		        'neutral'   =>  'neutral',
-		        'sadness'   =>  'sad',
-		    ];
-		    $mostCommon = $verbs[$mostCommon];
-
-		    foreach($rankings as $emotion=>$value) {
-		    	$rankings[$emotion] = $value / count($reviews);
-		    }
-
 		    return $this->render('viewRestaurant', [
 			    'model'         => $restaurant,
 			    'reviews'       => $reviews,
-		        'mostCommon'    => $mostCommon,
-		        'aggregate'     => $rankings,
+		        'mostCommon'    => $restaurant->getAggregateMostImportantEmotion(),
+		        'aggregate'     => $restaurant->getAggregateRankings(),
 		    ]);
 
 	    }else{

@@ -1,7 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $restaurants array */
+/* @var $restaurant \app\models\Restaurant */
+
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a selfie.';
 ?>
@@ -40,53 +44,37 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
             <table class="table table-hover">
                 <tbody>
 
-                    <tr>
-                        <th>Restaurant Name</th>
-                        <td width="75%">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" role="progressbar" style="width: 55%">
-                                    <span>55% Excited</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
-                    </tr>
+                    <?php
+                        foreach($restaurants as $restaurant){
 
-                    <tr>
-                        <th>Restaurant Name</th>
-                        <td width="75%">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-info" role="progressbar" style="width: 64%">
-                                    <span>64% Happy</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
-                    </tr>
+                            $emotion = $restaurant->getAggregateMostImportantEmotion();
+                            $value = $restaurant->getAggregateMostImportantEmotionValue();
 
-                    <tr>
-                        <th>Restaurant Name</th>
-                        <td width="75%">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" style="width: 12%">
-                                    <span>12% Surprised</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
-                    </tr>
+                            $colour = 'info';
+                            if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
+                            if($emotion == 'happiness') $colour = 'success';
 
+                    ?>
                     <tr>
-                        <th>Restaurant Name</th>
+                        <th><?= $restaurant->name ?></th>
                         <td width="75%">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 32%">
-                                    <span>32% Unhappy</span>
+                            <?php if($value > 0) { ?>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
+                                        <?=
+                                        $value ?>%">
+                                        <span><?= $value ?>% <?= ucfirst($emotion) ?></span>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php }else{ ?>
+                                <p>No reviews yet, be the first to add yours.</p>
+                            <?php } ?>
                         </td>
-                        <td><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></td>
+                        <td><a href="<?= Url::to(['site/view-restaurant', 'restaurant' => $restaurant->id]) ?>"><span
+                                    class="glyphicon
+                            glyphicon-chevron-right"></span></a></td>
                     </tr>
+                    <?php } ?>
 
                 </tbody>
             </table>

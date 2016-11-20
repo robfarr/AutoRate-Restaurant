@@ -8,6 +8,21 @@
 /* @var $aggregate array */
 
 $this->title = 'Rate a Restaurant - ' . $model->name;
+
+$verbs = [
+    'anger'     =>  'angry',
+    'contempt'  =>  'contempt',
+    'disgust'   =>  'disgusted',
+    'fear'      =>  'fearful',
+    'happiness' =>  'happy',
+    'neutral'   =>  'neutral',
+    'sadness'   =>  'sad',
+];
+$mostCommon = $verbs[$mostCommon];
+
+$weight = max($aggregate);
+$emotion = array_keys($aggregate, $weight)[0];
+
 ?>
 <div class="site-index">
 
@@ -16,6 +31,7 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
         <h1><?= $model->name ?></h1>
         <p><?= $model->address ?></p>
 
+        <?php if($weight > 0){ ?>
         <!-- Display most popular aggregate emotion -->
         <p>Most people are <?= $mostCommon ?> about this restaurant.</p>
 
@@ -23,9 +39,6 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
         <div class="progress">
 
             <?php
-
-                $weight = max($aggregate);
-                $emotion = array_keys($aggregate, $weight)[0];
 
                 $colour = 'info';
                 if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
@@ -35,10 +48,14 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
 
             <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?=
                 $weight ?>%">
-                <span><?= $weight ?>% <?= $emotion ?></span>
+                <span><?= $weight ?>% <?= ucfirst($emotion) ?></span>
             </div>
 
         </div>
+
+        <?php }else{ ?>
+            <p>No reviews yet, be the first to add yours.</p>
+        <?php } ?>
 
     </div>
 
@@ -71,7 +88,7 @@ $this->title = 'Rate a Restaurant - ' . $model->name;
                                 <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
                                     <?=
                                     $weight ?>%">
-                                    <span><?= $weight ?>% <?= $emotion ?></span>
+                                    <span><?= $weight ?>% <?= ucfirst($emotion) ?></span>
                                 </div>
 
 
