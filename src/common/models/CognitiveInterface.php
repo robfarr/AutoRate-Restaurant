@@ -10,6 +10,7 @@ class CognitiveInterface {
 
 	public function __construct($image_url) {
 		$this->image_url = $image_url;
+		$this->numFaces = 0;
 		$this->establishCognition();
 	}
 
@@ -28,9 +29,8 @@ class CognitiveInterface {
 
 		$this->client = new Client(array('headers' => $headers));
 
-		$request = $this->client->post($url, $body);
-
 		try {
+			$request = $this->client->post($url, $body);
 			$response = json_decode($request->getBody()->getContents());
 			$this->cognition_response = new \stdClass();
 			
@@ -52,10 +52,10 @@ class CognitiveInterface {
 				$this->cognition_response->{$key} = $value/$this->numFaces;
 			}
 		}
-		catch (HttpException $ex) {
+		catch(\InvalidArgumentException $ex) {
 			$this->cognition_response = null;
 		}
-		catch(\InvalidArgumentException $ex) {
+		catch(Exception $ex) {
 			$this->cognition_response = null;
 		}
 	}
@@ -75,8 +75,7 @@ class CognitiveInterface {
 	public function getPercentileScore() {
 
 		if(is_null($this->cognition_response)) {
-			echo "Cognition has not yet been established. ";
-			return -1;
+			return 0.0;
 		}
 
 		$values = array(
@@ -106,6 +105,8 @@ class CognitiveInterface {
 	}
 	
 	public function getDominantEmotion() {
+		if(is_null($this->cognition_response)) return "";
+		
 		$dominant = array(
 			"emotion" => "anger",
 			"value" => $this->cognition_response->anger

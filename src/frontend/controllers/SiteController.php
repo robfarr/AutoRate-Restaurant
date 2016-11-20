@@ -18,6 +18,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\GeocodeForm;
 
 /**
  * Site controller
@@ -79,8 +80,14 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-	    $model = new ImageForm();
+	    $model = new GeocodeForm();
 
+	    if(Yii::$app->request->isAjax) {
+	    	
+	    }
+	    
+	    $model = new ImageForm();
+	    
         if(Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if($model->upload()) {
@@ -93,8 +100,8 @@ class SiteController extends Controller
 					'image'         => Url::home() . '/uploads/' . $model->imageFile->name,
 	                'restaurant'    => 1,   // TODO
 	                'user'          => Yii::$app->user->id,
-	                'score'         => $ci->getEmotionValues(),
-	                'emotion'       => $ci->getDominantEmotion(),
+	                'score'         => $ci->getPercentileScore(),
+	                'emotion'       => $ci->getDominantEmotion()["emotion"],
 	            ]);
 
                 return;
@@ -241,7 +248,8 @@ class SiteController extends Controller
 			"test_data" => [
 				'num faces' => $ci->getNumFaces(),
 				'raw' => $ci->getEmotionValues(),
-				'dominant' => $ci->getDominantEmotion()
+				'dominant' => $ci->getDominantEmotion(),
+				'score' => $ci->getPercentileScore()
 			]
 		]
 		);
