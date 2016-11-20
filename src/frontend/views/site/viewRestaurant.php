@@ -5,7 +5,6 @@
 /* @var $reviews array */
 /* @var $review \app\models\Review */
 /* @var $mostCommon string */
-/* @var $aggregate array */
 
 $this->title = 'Rate a Restaurant - ' . $model->name;
 
@@ -18,10 +17,7 @@ $verbs = [
     'neutral'   =>  'neutral',
     'sadness'   =>  'sad',
 ];
-$mostCommon = $verbs[$mostCommon];
-
-$weight = max($aggregate);
-$emotion = array_keys($aggregate, $weight)[0];
+$mostCommon = $verbs[$model->getMostFrequentEmotion()];
 
 ?>
 <div class="site-index">
@@ -31,26 +27,20 @@ $emotion = array_keys($aggregate, $weight)[0];
         <h1><?= $model->name ?></h1>
         <p><?= $model->address ?></p>
 
-        <?php if($weight > 0){ ?>
-        <!-- Display most popular aggregate emotion -->
+        <?php if($model->getReviews()->count() > 0){ ?>
         <p>Most people are <?= $mostCommon ?> about this restaurant.</p>
 
-        <!-- Show aggregate bar here -->
         <div class="progress">
-
             <?php
-
+                $aggregateScore = $model->getAggregateScore();
                 $colour = 'info';
-                if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
-                if($emotion == 'happiness') $colour = 'success';
-
+                if($aggregateScore > 0) $colour = 'success';
+                if($aggregateScore < 0) $colour = 'danger';
             ?>
-
-            <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?=
-                $weight ?>%">
-                <span><?= $weight ?>% <?= ucfirst($emotion) ?></span>
+            <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width: <?= abs
+            ($aggregateScore) ?>%">
+                <span><?= abs($aggregateScore) ?>%</span>
             </div>
-
         </div>
 
         <?php }else{ ?>
@@ -73,25 +63,12 @@ $emotion = array_keys($aggregate, $weight)[0];
                                                class="img-thumbnail"></th>
                         <td style="vertical-align: middle">
                             <div class="progress">
-
-                                <?php
-
-                                    $emotion = $review->getMaxEmotion();
-                                    $weight = $review->getMaxWeight();
-
-                                    $colour = 'info';
-                                    if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
-                                    if($emotion == 'happiness') $colour = 'success';
-
-                                ?>
-
-                                <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
+                                <div class="progress-bar progress-bar-<?= $review->getColour() ?>" role="progressbar"
+                                     style="width:
                                     <?=
-                                    $weight ?>%">
-                                    <span><?= $weight ?>% <?= ucfirst($emotion) ?></span>
+                                    $review->getScoreMagnitude() ?>%">
+                                    <span><?= $review->getScoreMagnitude() ?>% <?= ucfirst($review->emotion) ?></span>
                                 </div>
-
-
                             </div>
                         </td>
                     </tr>

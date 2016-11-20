@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m161120_015821_review extends Migration
+class m161120_015823_review extends Migration
 {
     public function up()
     {
@@ -12,13 +12,8 @@ class m161120_015821_review extends Migration
 		    'image' => $this->string()->notNull(),
 		    'restaurant' => $this->integer()->notNull(),
 		    'user' => $this->integer()->notNull(),
-	        'anger' => $this->integer(),
-		    'contempt' => $this->integer(),
-		    'disgust' => $this->integer(),
-		    'fear' => $this->integer(),
-		    'happiness' => $this->integer(),
-		    'neutral' => $this->integer(),
-		    'sadness' => $this->integer(),
+	        'score' => $this->integer()->notNull(),
+		    'emotion' => $this->string()->notNull(),
 	    ]);
 
 	    $this->addForeignKey(

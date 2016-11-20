@@ -47,24 +47,20 @@ $this->title = 'Rate a Restaurant - Rate your restaurant meal by uploading a sel
 
                     <?php
                         foreach($restaurants as $restaurant){
-
-                            $emotion = $restaurant->getAggregateMostImportantEmotion();
-                            $value = $restaurant->getAggregateMostImportantEmotionValue();
-
+                            $value = $restaurant->getAggregateScore();
                             $colour = 'info';
-                            if(in_array($emotion, ['anger', 'disgust', 'fear', 'sadness'])) $colour = 'danger';
-                            if($emotion == 'happiness') $colour = 'success';
-
+                            if($value > 0) $colour = 'success';
+                            if($value < 0) $colour = 'danger';
                     ?>
                     <tr>
                         <th><?= $restaurant->name ?></th>
                         <td width="75%">
-                            <?php if($value > 0) { ?>
+                            <?php if($restaurant->getReviews()->count() > 0) { ?>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar" style="width:
-                                        <?=
-                                        $value ?>%">
-                                        <span><?= $value ?>% <?= ucfirst($emotion) ?></span>
+                                    <div class="progress-bar progress-bar-<?= $colour ?>" role="progressbar"
+                                         style="width:
+                                        <?= abs($value) ?>%">
+                                        <span><?= abs($value) ?>%</span>
                                     </div>
                                 </div>
                             <?php }else{ ?>

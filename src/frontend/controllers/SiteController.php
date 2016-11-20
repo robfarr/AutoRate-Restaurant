@@ -210,8 +210,7 @@ class SiteController extends Controller
 		    return $this->render('viewRestaurant', [
 			    'model'         => $restaurant,
 			    'reviews'       => $reviews,
-		        'mostCommon'    => $restaurant->getAggregateMostImportantEmotion(),
-		        'aggregate'     => $restaurant->getAggregateRankings(),
+		        'mostCommon'    => $restaurant->getMostFrequentEmotion(),
 		    ]);
 
 	    }else{
