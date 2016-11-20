@@ -19,7 +19,7 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
 
         <button class="btn btn-lg btn-success" data-toggle="modal" data-target="#submit-modal">
             <span class="glyphicon glyphicon-camera"></span>
-            Rate Restaurant
+            AutoRate Restaurant
         </button>
 
     </div>
