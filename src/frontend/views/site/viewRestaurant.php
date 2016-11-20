@@ -28,11 +28,19 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
         <p><?= $model->address ?></p>
 
         <?php if($model->getReviews()->count() > 0){ ?>
-        <p>Most people are <?= $mostCommon ?> about this restaurant.</p>
+        <?php
+            $aggregateScore = $model->getAggregateScore();
+
+            $word = 'are neutral about';
+            if($aggregateScore > 5) $word = 'like';
+            if($aggregateScore < -5) $word = 'dislike';
+
+        ?>
+        <p>Most people <?= $word ?> this restaurant.</p>
 
         <div class="progress">
             <?php
-                $aggregateScore = $model->getAggregateScore();
+
                 $colour = 'info';
                 if($aggregateScore > 0) $colour = 'success';
                 if($aggregateScore < 0) $colour = 'danger';
@@ -52,7 +60,7 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
     <div class="body-content">
 
         <div class="row">
-            
+
             <table class="table table-hover">
                 <tbody>
 
@@ -69,8 +77,7 @@ $mostCommon = $verbs[$model->getMostFrequentEmotion()];
                                      style="width:
                                     <?=
                                     $review->getScoreMagnitude() ?>%">
-                                    <span><?= round(abs($review->getScoreMagnitude())) ?>% <?= ucfirst
-                                        ($review->emotion) ?></span>
+                                    <span><?= round(abs($review->getScoreMagnitude())) ?>%</span>
                                 </div>
                             </div>
                         </td>
