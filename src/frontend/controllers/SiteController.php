@@ -205,8 +205,10 @@ class SiteController extends Controller
     }
 
 	public function actionTesting() {
-		$ci = new CognitiveInterface("http://cdn2.amerikanki.com/wp-content/uploads/2013/10/Smile.jpg");
+		$imurl = "http://cdn2.amerikanki.com/wp-content/uploads/2013/10/Smile.jpg";
+		$ci = new CognitiveInterface($imurl);
 		return $this->render('test', [
+			"imgurl" => $imurl,
 			"test_data" => [
 				'dominant' => $ci->getDominantEmotion()
 			]

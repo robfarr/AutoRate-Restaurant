@@ -1,3 +1,5 @@
 <?php
-echo var_dump($test_data);
+use yii\helpers\VarDumper;
 ?>
+<img src="<?= $imgurl ?>">
+<pre><?= VarDumper::dump($test_data);?></pre>
