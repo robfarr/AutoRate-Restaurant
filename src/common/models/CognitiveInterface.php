@@ -114,7 +114,16 @@ class CognitiveInterface {
 			}
 		}
 		
-		return (($total - $min) / (-100.0 - $min) * (100.0 - $max)) + 100.0;
+		return map($total, $min, $max, -100.0, 100.0);
+	}
+	
+	function map($value, $fromLow, $fromHigh, $toLow, $toHigh) {
+		$fromRange = $fromHigh - $fromLow;
+		$toRange = $toHigh - $toLow;
+		$scaleFactor = $toRange / $fromRange;
+		$tmpValue = $value - $fromLow;
+		$tmpValue *= $scaleFactor;
+		return $tmpValue + $toLow;
 	}
 	
 	public function getDominantEmotion() {
