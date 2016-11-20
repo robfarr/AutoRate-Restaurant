@@ -18,6 +18,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\GeocodeForm;
 
 /**
  * Site controller
@@ -79,8 +80,14 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-	    $model = new ImageForm();
+	    $model = new GeocodeForm();
 
+	    if(Yii::$app->request->isAjax) {
+	    	
+	    }
+	    
+	    $model = new ImageForm();
+	    
         if(Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if($model->upload()) {

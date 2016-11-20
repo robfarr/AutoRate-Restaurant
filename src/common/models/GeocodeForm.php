@@ -7,6 +7,8 @@ class GeocodeForm extends Model {
 	public $latitude;
 	public $longtitude;
 	
-	
+	public function reverse_geocode() {
+		
+	}
 }
 ?>
