@@ -39,7 +39,7 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
+                    ]
                 ],
             ],
             'verbs' => [
@@ -189,6 +189,18 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+	/**
+	 * Displays all ratings for a particular restaurant.
+	 *
+	 * @param $restaurant
+	 * @return mixed
+	 */
+    public function actionViewRestaurant($restaurant = null) {
+
+    	return $this->render('viewRestaurant', []);
+
     }
 
 
