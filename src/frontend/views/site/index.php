@@ -16,30 +16,6 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
 
 <div class="site-index">
 
-	<script type="text/javascript">
-	$(document).ready(function(){
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(addGeo);
-		}
-		function addGeo(position) {
-			document.getElementById('latInput').value = position.coords.latitude;
-			document.getElementById('lonInput').value = position.coords.longitude;
-// 			var json = "longitude=" + position.coords.longitude + "&latitude=" + position.coords.latitude;
-// 			$.ajax({
-// 				url : 'index.php?r=site/index',
-// 				type : 'POST',
-// 				data : json,
-// 				success : function(response) {
-// 					console.log('worked');
-// 				},
-// 				error : function(e) {
-// 					console.log(e);
-// 				}
-// 			});
-		}
-	});
-	</script>
-
     <div class="jumbotron">
         <h1>AutoRate a Restaurant</h1>
 
@@ -55,10 +31,22 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
         <?php else: ?>
 
         <form method="get">
-        	<input id='latInput' type="hidden" name="latitude">
-        	<input id='lonInput' type="hidden" name="longitude">
+        	<input id='latitude' type="hidden" name="latitude">
+        	<input id='longitude' type="hidden" name="longitude">
 	        <input type="submit" value="Find Nearby" class="btn btn-lg btn-info">
         </form>
+        
+        <script type="text/javascript">
+		$(document).ready(function(){
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(addGeo);
+			}
+			function addGeo(position) {
+				document.getElementById('latitude').value = position.coords.latitude;
+				document.getElementById('longitude').value = position.coords.longitude;
+			}
+		});
+		</script>
 
         <?php endif; ?>
 
