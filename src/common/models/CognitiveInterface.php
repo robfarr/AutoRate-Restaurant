@@ -60,7 +60,7 @@ class CognitiveInterface {
 		catch(\InvalidArgumentException $ex) {
 			$this->cognition_response = null;
 		}
-		catch(Exception $ex) {
+		catch(\Exception $ex) {
 			$this->cognition_response = null;
 		}
 	}

@@ -4,7 +4,6 @@ namespace frontend\controllers;
 use app\models\Restaurant;
 use app\models\Review;
 use Yii;
-use yii\helpers\Url;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -17,8 +16,8 @@ use common\models\CognitiveInterface;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-use common\models\GeocodeForm;
+use common\models\FinderInterface;
+use common\models\RestarantFinder;
 
 /**
  * Site controller
@@ -77,10 +76,19 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($latitude = null, $longitude = null)
     {
-
+	
+    	$restaurants = array();
         $model = new ImageForm();
+        
+        $post = \Yii::$app->request->post();
+        $session = \Yii::$app->session;
+        
+        if (isset($latitude) && isset($longitude)) {
+        	$geoFinder = new RestarantFinder($latitude, $longitude);
+        	$restaurants = $geoFinder->getNearbyRestaurants();
+        }
 
         if(Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
@@ -116,7 +124,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()->all()]);
+        return $this->render('index', ['model' => $model, 'restaurants' => $restaurants]);
     }
 
     /**
@@ -251,7 +259,7 @@ class SiteController extends Controller
 	public function actionTesting() {
 		$imurl = "http://i.huffpost.com/gen/616696/thumbs/r-MIB-IMAGE-4-large570.jpg";
 		$ci = new CognitiveInterface($imurl);
-		return $this->render('test', [
+		return $this->render('testEmotionAPI', [
 			"imgurl" => $imurl,
 			"test_data" => [
 				'num faces' => $ci->getNumFaces(),
@@ -259,8 +267,14 @@ class SiteController extends Controller
 				'dominant' => $ci->getDominantEmotion(),
 				'score' => $ci->getPercentileScore()
 			]
-		]
-		);
+		]);
+	}
+	
+	public function actionTestingGeo() {
+		$geoFinder = new RestarantFinder("51.36137253475817", "-2.358551510659561");
+		return $this->render('test', [
+			'test_data' => $geoFinder->getNearbyRestaurants()
+		]);
 	}
 
 }

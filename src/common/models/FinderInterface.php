@@ -11,47 +11,51 @@ class FinderInterface {
 	public function __construct($latitude, $longitude) {
 		$this->latitude = $latitude;
 		$this->longitude = $longitude;
-		$this->client = new Client();
 		$this->establish_client();
-		$this->findLocation();
+		$this->findRestaurants();
 	}
 	
 	public function establish_client() {
-		$url = 'https://www.zomato.com/api/v2.1/';
 		
-		$headers = array(
-			'Content-Type' => 'application/json',
-			'user-key' => \Yii::$app->params['zomatoAPIKey']
-		);
-		
-		$this->client = new Client(array('headers' => $headers));
+		$this->client = new Client([
+			'base_uri' => 'https://developers.zomato.com/api/v2.1/',
+			'headers' => [
+				'Accept' => 'application/json',
+				'user-key' => \Yii::$app->params['zomatoAPIKey']
+			]
+		]);
 	}
 	
 	public function getRestaurants() {
 		return $this->restaurants;
 	}
 	
-	private function findLocation() {
+	private function findRestaurants() {
 		try {
-			$request = $this->client->get("/geocode", [
-				'lat' => $this->latitude,
-				'lon' => $this->longitude
+			$request = $this->client->get("geocode", [
+				'query' => [
+						'lat' => $this->latitude,
+						'lon' => $this->longitude
+					]
 			]);
 			$this->restaurants = array();
 			$response = json_decode($request->getBody()->getContents());
 			$this->parse_location($response);
-		} catch (\Exception $e) {}
+		} catch (\Exception $e) {
+			$this->restaurants = array();
+		}
 	}
 	
 	private function parse_location($location_details) {
 		if (!isset($location_details->nearby_restaurants)) {
 			return;
 		}
-		$all_restaurants = $location_details->nearby_restaurants;
-		foreach($all_restaurants as $value) {
-			$id = $all_restaurants->id;
-			$name = $all_restaurants->name;
-			$address = $all_restaurants->location->address;
+		$nearby_restaurants = $location_details->nearby_restaurants;
+		foreach($nearby_restaurants as $value) {
+			$restaurant = $value->restaurant;
+			$id = $restaurant->id;
+			$name = $restaurant->name;
+			$address = $restaurant->location->address;
 			$this->restaurants[] = array($id, $name, $address);
 		}
 	}
