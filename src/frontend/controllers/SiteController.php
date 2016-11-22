@@ -126,7 +126,7 @@ class SiteController extends Controller
     }
     
     public function actionViewAll() {
-    	return $this->render('viewAll', ['restaurants' => Restaurant::find()->all()]);
+    	return $this->render('viewAll', ['useAddress' => true, 'restaurants' => Restaurant::find()->all()]);
     }
 
     /**
