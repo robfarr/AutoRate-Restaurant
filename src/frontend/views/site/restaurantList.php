@@ -26,6 +26,12 @@ $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
 
                     <tr>
                         <th><?= $restaurant->name ?></th>
+                        
+                        <?php if (isset($useAddress) && $useAddress): ?>
+                        
+                        <td><?= $restaurant->address ?></td>
+                        
+                        <?php endif; ?>
 
                         <?php if($restaurant->getReviews()->count() > 0) : ?>
 
