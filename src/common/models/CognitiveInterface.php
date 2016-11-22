@@ -15,22 +15,26 @@ class CognitiveInterface {
 	}
 
 	private function establishCognition() {
-		$url = 'https://api.projectoxford.ai/emotion/v1.0/recognize';
 
-		$headers = array(
-			// Request headers
+		$headers = [
 			'Content-Type' => 'application/json',
 			'Ocp-Apim-Subscription-Key' => \Yii::$app->params['emotionAPIKey'],
-		);
+		];
 
-		$body = array(
-			'json' => array('url' => $this->image_url)
-		);
+		$body = [
+			'json' => [
+				'url' => $this->image_url
+			]
+		];
 
-		$this->client = new Client(array('headers' => $headers));
+		$this->client = new Client([
+			'base_uri' => 'https://api.projectoxford.ai/emotion/v1.0/',
+			'headers' => $headers
+		]);
 
 		try {
-			$request = $this->client->post($url, $body);
+			$request = $this->client->post('recognize', $body);
+			
 			$response = json_decode($request->getBody()->getContents());
 			
 			if(empty($response)) {
@@ -83,7 +87,7 @@ class CognitiveInterface {
 			return 0.0;
 		}
 
-		$values = array(
+		$values = [
 			"anger" => -100.0,
 			"contempt" => -100.0,
 			"disgust" => -100.0,
@@ -92,7 +96,7 @@ class CognitiveInterface {
 			"neutral" => 0.0,
 			"sadness" => -100.0,
 			"surprise" => 0.0
-		);
+		];
 		
 		$total = 0.0;
 		
@@ -100,7 +104,7 @@ class CognitiveInterface {
 			
 			if($key == "surprise") {
 				$sign = $total/abs($total);
-				$total += (($total + ($sign * 100.0))/2.0) * $this->cognition_response->{$key};
+				$total += (($total + ($sign * 100.0))/2.0) * $this->cognition_response->surprise;
 			}
 			else {
 				$total += $value * $this->cognition_response->{$key};
@@ -113,19 +117,19 @@ class CognitiveInterface {
 	public function getDominantEmotion() {
 		if(is_null($this->cognition_response)) return "";
 		
-		$dominant = array(
+		$dominant = [
 			"emotion" => "anger",
 			"value" => $this->cognition_response->anger
-		);
+		];
 
 		foreach($this->cognition_response as $key => $value) {
 
 			if($value > $dominant["value"]) {
 
-				$dominant = array(
+				$dominant = [
 					"emotion" => $key,
 					"value" => $value
-				);
+				];
 			}
 		}
 
