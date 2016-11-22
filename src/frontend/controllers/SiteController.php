@@ -16,7 +16,6 @@ use common\models\CognitiveInterface;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use common\models\FinderInterface;
 use common\models\RestarantFinder;
 
 /**
@@ -100,7 +99,7 @@ class SiteController extends Controller
 
 				if(!is_array($ci->getDominantEmotion()) || !array_key_exists("emotion", $ci->getDominantEmotion())) {
 					Yii::$app->session->setFlash("error", "Invalid image, make sure your face is included in the image!");
-					return $this->render('index', ['model' => $model, 'restaurants' => Restaurant::find()->all()]);
+					return $this->render('index', ['model' => $model, 'restaurants' => $restaurants]);
 				}
 
 		    	$restaurant = Restaurant::findOne($_POST['restaurant']);
@@ -114,17 +113,20 @@ class SiteController extends Controller
 				$review->save(false);
 
                 $reviews = $restaurant->reviews;
-
-                    return $this->render('viewRestaurant', [
-                            'model'         => $restaurant,
-                            'reviews'       => $reviews,
-                        'mostCommon'    => $restaurant->getMostFrequentEmotion(),
-                    ]);
-
+                
+				return $this->render('viewRestaurant', [
+					'model'	=> $restaurant,
+					'reviews' => $reviews,
+					'mostCommon' => $restaurant->getMostFrequentEmotion(),
+				]);
             }
         }
 
         return $this->render('index', ['model' => $model, 'restaurants' => $restaurants]);
+    }
+    
+    public function actionViewAll() {
+    	return $this->render('viewAll', ['restaurants' => Restaurant::find()->all()]);
     }
 
     /**
