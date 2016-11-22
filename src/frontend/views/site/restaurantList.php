@@ -29,7 +29,7 @@ $this->registerAssetBundle(yii\web\JqueryAsset::className(), View::POS_HEAD);
                         
                         <?php if (isset($useAddress) && $useAddress): ?>
                         
-                        <td><?= $restaurant->address ?></td>
+                        <td><?= isset($restaurant->address) ? $restaurant->address : "" ?></td>
                         
                         <?php endif; ?>
 
