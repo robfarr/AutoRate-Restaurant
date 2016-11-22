@@ -34,7 +34,7 @@ $this->title = 'AutoRate a Restaurant - Rate your restaurant meal by uploading a
         	<input id='latitude' type="hidden" name="latitude">
         	<input id='longitude' type="hidden" name="longitude">
 	        <input type="submit" value="Find Nearby" class="btn btn-lg btn-info">
-        <a href="<?= Url::toRoute(['/site/view-all'])?>" class="btn btn-lg btn-info">View All <span class="glyphicon glyphicon-arrow-right"></span></a>
+        	<a href="<?= Url::toRoute(['/site/view-all'])?>" class="btn btn-lg btn-info">View All <span class="glyphicon glyphicon-arrow-right"></span></a>
         </form>
         
         
