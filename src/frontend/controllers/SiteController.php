@@ -18,6 +18,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use common\models\RestarantFinder;
 use common\models\FactualWrapper;
+use common\models\ZomatoWrapper;
+use common\models\EmotionWrapper;
 
 /**
  * Site controller
@@ -96,7 +98,7 @@ class SiteController extends Controller
 
                 $imageUrl = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . '/uploads/' . $model->name;
 
-            	$ci = new CognitiveInterface($imageUrl);
+            	$ci = new EmotionWrapper($imageUrl);
 
 				if(!is_array($ci->getDominantEmotion()) || !array_key_exists("emotion", $ci->getDominantEmotion())) {
 					Yii::$app->session->setFlash("error", "Invalid image, make sure your face is included in the image!");
@@ -261,7 +263,7 @@ class SiteController extends Controller
 
 	public function actionTesting() {
 		$imurl = "http://i.huffpost.com/gen/616696/thumbs/r-MIB-IMAGE-4-large570.jpg";
-		$ci = new CognitiveInterface($imurl);
+		$ci = new EmotionWrapper($imurl);
 		return $this->render('testEmotionAPI', [
 			"imgurl" => $imurl,
 			"test_data" => [
@@ -273,10 +275,10 @@ class SiteController extends Controller
 		]);
 	}
 	
-	public function actionTestingGeo() {
-		$geoFinder = new RestarantFinder("51.36137253475817", "-2.358551510659561");
+	public function actionTestingZomato() {
+		$zomato = new ZomatoWrapper("51.3806222", "-2.3600318"); // Bath City Centre, UK
 		return $this->render('test', [
-			'test_data' => $geoFinder->getNearbyRestaurants()
+			'test_data' => $zomato->getRestaurants()
 		]);
 	}
 	
@@ -286,7 +288,7 @@ class SiteController extends Controller
 		->addGeoQuery("51.3806222", "-2.3600318") // Bath City Centre, UK
 		->addSearchString("McDonald's");
 		return $this->render('test', [
-				'test_data' => $factual->fetchResults()
+			'test_data' => $factual->fetchResults()
 		]);
 	}
 

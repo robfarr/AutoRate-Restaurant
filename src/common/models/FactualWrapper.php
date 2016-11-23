@@ -52,7 +52,7 @@ class FactualWrapper {
 									(array_key_exists('region', $restaurantUnprocessed) ? $restaurantUnprocessed['region'] . ", " : "") .
 									(array_key_exists('postcode', $restaurantUnprocessed) ? ($restaurantUnprocessed['postcode'] . ", ") : "").
 									(array_key_exists('country', $restaurantUnprocessed) ? Countries::getCountry($restaurantUnprocessed['country']) : "");
-			$restaurant->id = $restaurantUnprocessed['factual_id'];
+			$restaurant->factualId = $restaurantUnprocessed['factual_id'];
 			if (array_key_exists('$distance', $restaurantUnprocessed)) {
 				$restaurant->distance = $restaurantUnprocessed['$distance'];
 			}

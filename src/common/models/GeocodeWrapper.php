@@ -2,7 +2,7 @@
 namespace common\models;
 use GuzzleHttp\Client;
 
-class GeocodeInterface {
+class GeocodeWrapper {
 	private $latitude;
 	private $longitude;
 	private $locality;

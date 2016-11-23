@@ -2,10 +2,10 @@
 namespace common\models;
 use GuzzleHttp\Client;
 
-class CognitiveInterface {
+class EmotionWrapper {
 	private $client;
 	private $image_url;
-	private $cognition_response;
+	private $emotionResponse;
 	private $numFaces;
 
 	public function __construct($image_url) {
@@ -41,31 +41,31 @@ class CognitiveInterface {
 				return;
 			}
 			
-			$this->cognition_response = new \stdClass();
+			$this->emotionResponse = new \stdClass();
 			
 			foreach($response[0]->scores as $key => $value) {
-				$this->cognition_response->{$key} = (float) 0;
+				$this->emotionResponse->{$key} = (float) 0;
 			}
 			
 			foreach($response as $face) {
 				$scores = $face->scores;
 				
 				foreach($scores as $key => $value) {
-					$this->cognition_response->{$key} += (float) $value;
+					$this->emotionResponse->{$key} += (float) $value;
 				}
 			}
 			
 			$this->numFaces = sizeof($response);
 			
-			foreach($this->cognition_response as $key => $value) {
-				$this->cognition_response->{$key} = $value/$this->numFaces;
+			foreach($this->emotionResponse as $key => $value) {
+				$this->emotionResponse->{$key} = $value/$this->numFaces;
 			}
 		}
 		catch(\InvalidArgumentException $ex) {
-			$this->cognition_response = null;
+			$this->emotionResponse = null;
 		}
 		catch(\Exception $ex) {
-			$this->cognition_response = null;
+			$this->emotionResponse = null;
 		}
 	}
 
@@ -74,7 +74,7 @@ class CognitiveInterface {
 	}
 	
 	public function getEmotionValues() {
-		return $this->cognition_response;
+		return $this->emotionResponse;
 	}
 	
 	public function getNumFaces() {
@@ -83,7 +83,7 @@ class CognitiveInterface {
 
 	public function getPercentileScore() {
 
-		if(is_null($this->cognition_response)) {
+		if(is_null($this->emotionResponse)) {
 			return 0.0;
 		}
 
@@ -104,10 +104,10 @@ class CognitiveInterface {
 			
 			if($key == "surprise") {
 				$sign = $total/abs($total);
-				$total += (($total + ($sign * 100.0))/2.0) * $this->cognition_response->surprise;
+				$total += (($total + ($sign * 100.0))/2.0) * $this->emotionResponse->surprise;
 			}
 			else {
-				$total += $value * $this->cognition_response->{$key};
+				$total += $value * $this->emotionResponse->{$key};
 			}
 		}
 		
@@ -115,14 +115,14 @@ class CognitiveInterface {
 	}
 	
 	public function getDominantEmotion() {
-		if(is_null($this->cognition_response)) return "";
+		if(is_null($this->emotionResponse)) return "";
 		
 		$dominant = [
 			"emotion" => "anger",
-			"value" => $this->cognition_response->anger
+			"value" => $this->emotionResponse->anger
 		];
 
-		foreach($this->cognition_response as $key => $value) {
+		foreach($this->emotionResponse as $key => $value) {
 
 			if($value > $dominant["value"]) {
 

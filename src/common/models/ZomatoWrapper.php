@@ -2,7 +2,7 @@
 namespace common\models;
 use GuzzleHttp\Client;
 
-class FinderInterface {
+class ZomatoWrapper {
 	private $latitude;
 	private $longitude;
 	private $client;
@@ -53,10 +53,11 @@ class FinderInterface {
 		$nearby_restaurants = $location_details->nearby_restaurants;
 		foreach($nearby_restaurants as $value) {
 			$restaurant = $value->restaurant;
-			$id = $restaurant->id;
-			$name = $restaurant->name;
-			$address = $restaurant->location->address;
-			$this->restaurants[] = array($id, $name, $address);
+			$result = new \stdClass();
+			$result->id = $restaurant->id;
+			$result->name = $restaurant->name;
+			$result->address = $restaurant->location->address;
+			$this->restaurants[] = $result;
 		}
 	}
 }

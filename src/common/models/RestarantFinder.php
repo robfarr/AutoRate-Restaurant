@@ -3,7 +3,7 @@ namespace common\models;
 
 use app\models\Restaurant;
 
-class RestarantFinder extends FinderInterface{
+class RestarantFinder extends ZomatoWrapper {
 	
 	public function getNearbyRestaurants() {
 		$restaurants = $this->getRestaurants();
@@ -14,16 +14,16 @@ class RestarantFinder extends FinderInterface{
 			return $result;
 		}
 		
-		foreach ($restaurants as $triple) {
-			$restaurant = Restaurant::findOne($triple[0]);
-			if ($restaurant == null) {
-				$restaurant = new Restaurant();
-				$restaurant->id = $triple[0];
-				$restaurant->name = $triple[1];
-				$restaurant->address = $triple[2];
-				$restaurant->save();
+		foreach ($restaurants as $restaurant) {
+			$localRestaurant = Restaurant::findOne($restaurant->id);
+			if ($localRestaurant == null) {
+				$localRestaurant = new Restaurant();
+				$localRestaurant->id = $restaurant->id;
+				$localRestaurant->name = $restaurant->name;
+				$localRestaurant->address = $restaurant->address;
+				$localRestaurant->save();
 			}
-			$result[] = $restaurant;
+			$result[] = $localRestaurant;
 		}
 		
 		return $result;
