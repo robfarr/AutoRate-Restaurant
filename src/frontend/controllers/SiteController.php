@@ -281,9 +281,12 @@ class SiteController extends Controller
 	}
 	
 	public function actionTestingFactual() {
-		$geoFinder = new FactualWrapper();
+		$factual = new FactualWrapper();
+		$factual
+		->addGeoQuery("51.3806222", "-2.3600318") // Bath City Centre, UK
+		->addSearchString("McDonald's");
 		return $this->render('test', [
-				'test_data' => $geoFinder->search("51.36137253475817", "-2.358551510659561")
+				'test_data' => $factual->fetchResults()
 		]);
 	}
 
