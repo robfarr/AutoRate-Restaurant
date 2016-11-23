@@ -17,6 +17,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use common\models\RestarantFinder;
+use common\models\FactualWrapper;
 
 /**
  * Site controller
@@ -276,6 +277,13 @@ class SiteController extends Controller
 		$geoFinder = new RestarantFinder("51.36137253475817", "-2.358551510659561");
 		return $this->render('test', [
 			'test_data' => $geoFinder->getNearbyRestaurants()
+		]);
+	}
+	
+	public function actionTestingFactual() {
+		$geoFinder = new FactualWrapper();
+		return $this->render('test', [
+				'test_data' => $geoFinder->search("51.36137253475817", "-2.358551510659561")
 		]);
 	}
 
